@@ -1,0 +1,2480 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30% Off This Weekend | Sugar</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/assets/fonts/fonts.css" />
+    <script src="/assets/analytics.js?v=20261102"></script>
+    <script src="/assets/nz-invite.js?v=6"></script>
+    <script>
+      window.API_GATEWAY_URL = ''
+    </script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Bricolage Grotesque', Arial, Helvetica, sans-serif;
+        background: #eceaf8;
+        color: #241a54;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── Nav ── */
+      .site-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 32px;
+        background: rgba(236, 234, 248, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .nav-logo {
+        font-size: 26px;
+        font-weight: 700;
+        color: #9b86ea;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        border-radius: 50px;
+        border: none;
+        appearance: none;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        background: #9b86ea;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 4px 0 0 #221a51;
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 0 0 #221a51;
+      }
+
+      .nav-cta:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 0 #221a51;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .nav-link {
+        font-size: 14px;
+        font-weight: 600;
+        color: #241a54;
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+
+      .nav-link:hover {
+        color: #9b86ea;
+      }
+
+      .nav-links [hidden] {
+        display: none !important;
+      }
+
+      .nav-welcome {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(155, 134, 234, 0.2);
+        background: rgba(155, 134, 234, 0.08);
+        color: #6d5dd3;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .nav-auth-ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(155, 134, 234, 0.22);
+        color: #3b2d7a;
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .nav-auth-ghost:hover {
+        transform: translateY(-1px);
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(36, 26, 84, 0.08);
+      }
+
+      .nav-auth-ghost:active {
+        transform: translateY(1px);
+      }
+
+      .nav-hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        z-index: 2;
+      }
+
+      .login-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(20, 15, 49, 0.58);
+      }
+
+      .login-modal.is-open {
+        display: flex;
+      }
+
+      .login-modal__backdrop {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: transparent;
+        cursor: default;
+      }
+
+      .login-modal__panel {
+        position: relative;
+        width: min(100%, 420px);
+        border: 1px solid rgba(36, 26, 84, 0.12);
+        border-radius: 8px;
+        background: #fff;
+        padding: 24px;
+        box-shadow: 0 24px 80px rgba(20, 15, 49, 0.28);
+      }
+
+      .login-modal__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .login-modal__eyebrow {
+        color: #7a68df;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .login-modal__title {
+        margin-top: 8px;
+        color: #241a54;
+        font-size: 26px;
+        line-height: 1.12;
+      }
+
+      .login-modal__close {
+        display: inline-flex;
+        width: 36px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #6d6689;
+        font: inherit;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .login-modal__close:hover {
+        background: #f3f1fb;
+        color: #241a54;
+      }
+
+      .login-modal__options,
+      .login-modal__email {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .login-modal__option {
+        display: flex;
+        min-height: 52px;
+        width: 100%;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(36, 26, 84, 0.16);
+        border-radius: 8px;
+        background: #fff;
+        padding: 12px 14px;
+        color: #241a54;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .login-modal__option:hover {
+        background: #f7f5ff;
+      }
+
+      .login-modal__icon {
+        display: inline-flex;
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(36, 26, 84, 0.12);
+        border-radius: 8px;
+        background: #fff;
+        flex: 0 0 auto;
+      }
+
+      .login-modal__icon svg {
+        display: block;
+        width: 20px;
+        height: 20px;
+      }
+
+      .login-modal__field-label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        color: #241a54;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .login-modal__input {
+        width: 100%;
+        border: 1px solid rgba(36, 26, 84, 0.2);
+        border-radius: 8px;
+        padding: 13px 12px;
+        color: #241a54;
+        font: inherit;
+        font-size: 15px;
+      }
+
+      .login-modal__input:disabled {
+        background: #f7f5ff;
+        color: #8c86aa;
+      }
+
+      .login-modal__submit {
+        border: 0;
+        border-radius: 8px;
+        background: #7a68df;
+        color: #fff;
+        padding: 13px 16px;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .login-modal__submit:disabled {
+        cursor: wait;
+        opacity: 0.6;
+      }
+
+      .login-modal__back {
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #5c527d;
+        padding: 10px 12px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .login-modal__back:hover {
+        background: #f3f1fb;
+        color: #241a54;
+      }
+
+      .login-modal__error {
+        display: none;
+        border-radius: 8px;
+        background: #fff1f2;
+        color: #b42318;
+        padding: 10px 12px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .login-modal__error:not(:empty) {
+        display: block;
+      }
+
+      .login-modal__email[hidden],
+      .login-modal__options[hidden],
+      .login-modal__code[hidden] {
+        display: none !important;
+      }
+
+      /* ── Section layout ── */
+      section {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ── Hero ── */
+      .hero {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        padding-bottom: 60px;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background: #fff;
+        color: #9b86ea;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 6px 16px;
+        border-radius: 50px;
+        margin-bottom: 28px;
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 6vw, 64px);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -1.5px;
+        max-width: 720px;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 .highlight {
+        color: #9b86ea;
+      }
+
+      .hero-sub {
+        font-size: clamp(16px, 2.2vw, 20px);
+        color: #6e6883;
+        line-height: 1.6;
+        max-width: 520px;
+        margin-bottom: 40px;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 18px 36px;
+        border-radius: 50px;
+        border: none;
+        font-family: inherit;
+        font-size: 17px;
+        font-weight: 700;
+        color: #fff;
+        background: #9b86ea;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 6px 0 0 #221a51;
+        text-decoration: none;
+      }
+
+      .hero-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 0 0 #221a51;
+      }
+
+      .hero-cta:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 0 #221a51;
+      }
+
+      .hero-cta:disabled,
+      .hero-cta.is-loading {
+        opacity: 0.74;
+        cursor: wait;
+        transform: none;
+        box-shadow: 0 4px 0 0 #221a51;
+      }
+
+      .hero-note {
+        margin-top: 16px;
+        font-size: 13px;
+        color: #b8b2d0;
+      }
+
+      /* ── Problem statement ── */
+      .problem {
+        padding-top: 100px;
+        padding-bottom: 100px;
+        text-align: center;
+      }
+
+      .problem-text {
+        font-size: clamp(22px, 3.5vw, 36px);
+        font-weight: 700;
+        line-height: 1.35;
+        max-width: 680px;
+        margin: 0 auto;
+        letter-spacing: -0.5px;
+      }
+
+      .problem-text .muted {
+        color: #b8b2d0;
+      }
+
+      /* ── How it works ── */
+      .how {
+        padding-top: 80px;
+        padding-bottom: 100px;
+      }
+
+      .section-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #9b86ea;
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -1px;
+        margin-bottom: 56px;
+        max-width: 540px;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .step-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+        position: relative;
+      }
+
+      .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #f0effa;
+        color: #9b86ea;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .step-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .step-card p {
+        font-size: 14px;
+        color: #6e6883;
+        line-height: 1.65;
+      }
+
+      /* ── What we cover ── */
+      .categories {
+        padding-top: 80px;
+        padding-bottom: 100px;
+      }
+
+      .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .cat-item {
+        background: #fff;
+        border-radius: 14px;
+        padding: 22px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 4px 20px rgba(34, 26, 81, 0.04);
+      }
+
+      .cat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #f0effa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .cat-item span {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      /* ── Case study ── */
+      .case-study {
+        padding-top: 80px;
+        padding-bottom: 100px;
+      }
+
+      .case-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 48px 44px;
+        box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+      }
+
+      .case-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+
+      .case-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #9b86ea, #6b5bd6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 22px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .case-name {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .case-context {
+        font-size: 14px;
+        color: #6e6883;
+        margin-top: 2px;
+      }
+
+      .case-total {
+        text-align: center;
+        padding: 28px 0;
+        margin-bottom: 28px;
+        border-top: 1px solid #e6e5f0;
+        border-bottom: 1px solid #e6e5f0;
+      }
+
+      .case-total-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #6e6883;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+      }
+
+      .case-total-num {
+        font-size: clamp(32px, 4vw, 48px);
+        font-weight: 800;
+        color: #9b86ea;
+        letter-spacing: -1px;
+      }
+
+      .case-total-sub {
+        font-size: 14px;
+        color: #b8b2d0;
+        margin-top: 4px;
+      }
+
+      .leak {
+        padding: 20px 0;
+        border-bottom: 1px solid #f0effa;
+      }
+
+      .leak:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .leak-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 6px;
+      }
+
+      .leak-name {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .leak-saving {
+        font-size: 16px;
+        font-weight: 700;
+        color: #9b86ea;
+        white-space: nowrap;
+        margin-left: 16px;
+      }
+
+      .leak-detail {
+        font-size: 14px;
+        color: #6e6883;
+        line-height: 1.6;
+      }
+
+      .case-footer {
+        margin-top: 28px;
+        padding: 20px 24px;
+        background: #f0effa;
+        border-radius: 14px;
+        font-size: 14px;
+        color: #6e6883;
+        line-height: 1.6;
+      }
+
+      .case-footer strong {
+        color: #241a54;
+      }
+
+      /* ── Benefits ── */
+      .benefits {
+        padding-top: 80px;
+        padding-bottom: 100px;
+      }
+
+      .benefit-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .benefit-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+      }
+
+      .benefit-card .icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: #f0effa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        margin-bottom: 18px;
+      }
+
+      .benefit-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      .benefit-card p {
+        font-size: 14px;
+        color: #6e6883;
+        line-height: 1.65;
+      }
+
+      /* ── Pricing teaser ── */
+      .pricing-teaser {
+        padding-top: 80px;
+        padding-bottom: 100px;
+        text-align: center;
+      }
+
+      .pricing-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 48px 40px;
+        box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      .pricing-card h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .pricing-card p {
+        font-size: 15px;
+        color: #6e6883;
+        line-height: 1.65;
+        margin-bottom: 24px;
+      }
+
+      .pricing-card .pricing-highlight {
+        font-size: clamp(20px, 3vw, 28px);
+        font-weight: 800;
+        color: #9b86ea;
+        margin-bottom: 8px;
+      }
+
+      .pricing-card .pricing-note {
+        font-size: 13px;
+        color: #b8b2d0;
+        margin-bottom: 32px;
+      }
+
+      .pricing-card .hero-cta {
+        font-size: 15px;
+        padding: 16px 32px;
+      }
+
+      .pricing-guarantee {
+        font-size: 14px;
+        color: #6e6883;
+        margin-top: 12px;
+      }
+
+      .pricing-guarantee strong {
+        color: #241a54;
+      }
+
+      .plan-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 24px 0 28px;
+        text-align: left;
+      }
+
+      .plan-option {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 20px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1.5px solid transparent;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.18s ease-out;
+        text-decoration: none;
+        color: #241a54;
+        font-family: inherit;
+        width: 100%;
+        text-align: left;
+      }
+
+      .plan-option:hover,
+      .plan-option.is-selected {
+        background: #f0effa;
+        border-color: #241a54;
+        transform: translate(-2px, -2px);
+        box-shadow: 4px 5px 0 #6b5cc5;
+      }
+
+      .plan-option:focus-visible {
+        outline: 3px solid rgba(155, 134, 234, 0.45);
+        outline-offset: 3px;
+      }
+
+      .plan-option .plan-radio {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(31, 27, 77, 0.25);
+        background: #fff;
+      }
+
+      .plan-option:hover .plan-radio,
+      .plan-option.is-selected .plan-radio {
+        border: 5px solid #6b5cc5;
+        background: #fff;
+      }
+
+      .plan-option .plan-label {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .plan-option .plan-sublabel {
+        font-size: 12px;
+        color: #6e6883;
+        margin-top: 2px;
+      }
+
+      .plan-option .plan-price {
+        font-weight: 700;
+        font-size: 18px;
+        white-space: nowrap;
+      }
+
+      .plan-option .plan-price span {
+        font-weight: 400;
+        font-size: 13px;
+        color: #6e6883;
+      }
+
+      .plan-badge {
+        position: absolute;
+        top: -9px;
+        right: 16px;
+        background: #9b86ea;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 6px;
+      }
+
+      .checkout-status {
+        min-height: 22px;
+        margin: -10px 0 18px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #6e6883;
+        text-align: center;
+      }
+
+      .checkout-status.is-error {
+        color: #b42318;
+      }
+
+      .checkout-status.is-success {
+        color: #176b4d;
+      }
+
+      .pricing-secondary {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid #d6d3e8;
+        text-align: center;
+      }
+
+      .mailbox-cta-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .bank-cta-row {
+        margin-top: 10px;
+      }
+
+      .mailbox-connect-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 48px;
+        padding: 12px 14px;
+        border: 1.5px solid rgba(36, 26, 84, 0.16);
+        border-radius: 14px;
+        background: #fff;
+        color: #241a54;
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+        transition:
+          transform 0.15s,
+          border-color 0.15s,
+          box-shadow 0.15s,
+          color 0.15s;
+      }
+
+      .mailbox-connect-button:hover {
+        border-color: rgba(155, 134, 234, 0.7);
+        color: #6b5cc5;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(34, 26, 81, 0.08);
+      }
+
+      .mailbox-connect-button:focus-visible {
+        outline: 3px solid rgba(155, 134, 234, 0.45);
+        outline-offset: 3px;
+      }
+
+      .mailbox-connect-button__icon {
+        display: inline-flex;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f0effa;
+        color: #6b5cc5;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .mailbox-connect-button__icon--outlook {
+        background: #eaf2ff;
+        color: #0a63d8;
+      }
+
+      .mailbox-connect-button__icon--imap {
+        background: #e9f8f6;
+        color: #168f84;
+      }
+
+      .mailbox-connect-button__icon--bank {
+        background: #241a54;
+        color: #fff;
+      }
+
+      .email-context-banner {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        max-width: 440px;
+        margin: 14px auto 0;
+        padding: 10px 12px;
+        border: 1px solid rgba(155, 134, 234, 0.28);
+        border-radius: 14px;
+        background: #f8f7fe;
+        color: #241a54;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .email-context-banner strong {
+        flex: 0 0 auto;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #f0effa;
+        color: #6b5cc5;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .email-context-banner span {
+        color: #6e6883;
+        font-weight: 600;
+      }
+
+      /* ── Final CTA ── */
+      .final-cta {
+        padding-top: 32px;
+        padding-bottom: 120px;
+        text-align: center;
+      }
+
+      .final-cta h2 {
+        font-size: clamp(28px, 4.5vw, 48px);
+        font-weight: 800;
+        line-height: 1.12;
+        letter-spacing: -1px;
+        max-width: 600px;
+        margin: 0 auto 20px;
+      }
+
+      .final-cta p {
+        font-size: 16px;
+        color: #6e6883;
+        margin-bottom: 36px;
+      }
+
+      /* ── Footer ── */
+      .site-footer {
+        border-top: 1px solid #d6d3e8;
+        padding: 48px 24px 40px;
+        text-align: center;
+      }
+
+      .footer-inner {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      .footer-logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #9b86ea;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+
+      .footer-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+      }
+
+      .footer-nav a {
+        font-size: 14px;
+        font-weight: 600;
+        color: #241a54;
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+
+      .footer-nav a:hover {
+        color: #9b86ea;
+      }
+
+      .footer-email {
+        margin-bottom: 20px;
+      }
+
+      .footer-email a {
+        font-size: 14px;
+        color: #9b86ea;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer-email a:hover {
+        text-decoration: underline;
+      }
+
+      .footer-copy {
+        font-size: 13px;
+        color: #b8b2d0;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 768px) {
+        .site-nav {
+          padding: 14px 20px;
+        }
+        .nav-logo {
+          font-size: 22px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .nav-hamburger {
+          display: block;
+        }
+
+        .nav-links.is-open {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 1;
+          background: #eceaf8;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          padding: 16px 24px 28px;
+          gap: 0;
+          align-items: stretch;
+          border-bottom: 1px solid rgba(36, 26, 84, 0.1);
+          box-shadow: 0 18px 36px rgba(36, 26, 84, 0.12);
+        }
+
+        .nav-links.is-open .nav-link {
+          display: block;
+          padding: 12px 0;
+          font-size: 16px;
+          text-align: center;
+          border-bottom: 1px solid #d6d3e8;
+        }
+
+        .nav-links.is-open .nav-cta,
+        .nav-links.is-open .nav-auth-ghost,
+        .nav-links.is-open .nav-welcome {
+          display: flex;
+          width: 100%;
+          max-width: 340px;
+          min-height: 44px;
+          margin-top: 12px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 6px;
+          text-align: center;
+          justify-content: center;
+        }
+
+        .steps {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .benefit-list {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .cat-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+
+        .case-card {
+          padding: 28px 20px;
+        }
+
+        .case-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 12px;
+        }
+
+        .leak-top {
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .leak-saving {
+          margin-left: 0;
+        }
+
+        .pricing-card {
+          padding: 32px 24px;
+        }
+
+        .email-context-banner {
+          display: flex;
+          align-items: center;
+          max-width: 100%;
+        }
+
+        .mailbox-cta-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cat-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Nav ── -->
+    <nav class="site-nav">
+      <a href="/" class="nav-logo">sugar</a>
+      <div class="nav-links" id="nav-links">
+        <a href="/about" class="nav-link">About</a>
+        <a href="/faq" class="nav-link">FAQ</a>
+        <a href="/special-offer-1010/pricing" class="nav-link">Pricing</a>
+        <a href="/customer-love" class="nav-link">Customer Love</a>
+        <a href="/connect-email" class="nav-link">Connect Email</a>
+        <span class="nav-welcome" id="nav-welcome" hidden></span>
+        <a
+          href="#get-started"
+          class="nav-auth-ghost"
+          id="nav-get-started"
+          hidden
+          >Get started</a
+        >
+        <button type="button" class="nav-cta" id="nav-auth-button">
+          Login
+        </button>
+      </div>
+      <button
+        class="nav-hamburger"
+        onclick="document.getElementById('nav-links').classList.toggle('is-open')"
+        aria-label="Toggle menu"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#241A54"
+          stroke-width="2"
+          stroke-linecap="round"
+          width="28"
+          height="28"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+
+    <div
+      class="login-modal"
+      id="login-choice-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="login-choice-title"
+    >
+      <button
+        type="button"
+        class="login-modal__backdrop"
+        id="login-modal-backdrop"
+        aria-label="Close login dialog"
+      ></button>
+      <section class="login-modal__panel">
+        <div class="login-modal__top">
+          <div>
+            <div class="login-modal__eyebrow">Sugar Login</div>
+            <h2 class="login-modal__title" id="login-choice-title">
+              Choose how to sign in
+            </h2>
+          </div>
+          <button
+            type="button"
+            class="login-modal__close"
+            id="login-modal-close"
+            aria-label="Close login dialog"
+          >
+            x
+          </button>
+        </div>
+
+        <div class="login-modal__options" id="login-provider-options">
+          <button
+            type="button"
+            class="login-modal__option"
+            data-login-provider="google"
+          >
+            <span class="login-modal__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.24 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C4 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.86-2.23.8-.61z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 4 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                />
+              </svg>
+            </span>
+            Continue with Google
+          </button>
+          <button
+            type="button"
+            class="login-modal__option"
+            data-login-provider="apple"
+          >
+            <span class="login-modal__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#111827">
+                <path
+                  d="M16.63 13.08c-.03-2.79 2.28-4.13 2.38-4.19-1.3-1.9-3.32-2.16-4.04-2.19-1.72-.17-3.36 1.01-4.23 1.01-.87 0-2.22-.99-3.65-.96-1.88.03-3.61 1.09-4.58 2.77-1.95 3.39-.5 8.41 1.4 11.16.93 1.34 2.04 2.85 3.5 2.8 1.4-.06 1.94-.91 3.64-.91s2.18.91 3.67.88c1.51-.03 2.47-1.37 3.4-2.72 1.07-1.56 1.51-3.07 1.53-3.15-.03-.01-2.95-1.13-2.98-4.5z"
+                />
+                <path
+                  d="M13.84 4.88c.78-.95 1.31-2.26 1.16-3.57-1.13.05-2.5.75-3.31 1.7-.73.84-1.36 2.17-1.19 3.45 1.26.1 2.55-.64 3.34-1.58z"
+                />
+              </svg>
+            </span>
+            Continue with Apple
+          </button>
+          <button
+            type="button"
+            class="login-modal__option"
+            data-login-provider="outlook"
+          >
+            <span class="login-modal__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path fill="#0F6CBD" d="M2 5.5 10.5 3v18L2 18.5z" />
+                <path fill="#28A8EA" d="M10.5 5H21v14H10.5z" />
+                <path fill="#50D9FF" d="M12 7h7v4h-7z" />
+                <path fill="#0078D4" d="M12 13h7v4h-7z" />
+                <path
+                  fill="#fff"
+                  d="M6.25 14.75c-1.65 0-2.75-1.22-2.75-3.03 0-1.82 1.12-3.04 2.78-3.04s2.75 1.21 2.75 3.01c0 1.84-1.12 3.06-2.78 3.06zm.02-1.15c.86 0 1.39-.7 1.39-1.88 0-1.17-.54-1.87-1.4-1.87-.87 0-1.4.7-1.4 1.87 0 1.18.53 1.88 1.41 1.88z"
+                />
+              </svg>
+            </span>
+            Continue with Outlook &amp; Hotmail
+          </button>
+          <button
+            type="button"
+            class="login-modal__option"
+            data-login-provider="email"
+          >
+            <span class="login-modal__icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#4f46e5"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 6h16v12H4z" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </span>
+            Continue with Email
+          </button>
+        </div>
+
+        <form class="login-modal__email" id="login-email-form" hidden>
+          <label class="login-modal__field-label">
+            Email address
+            <input
+              class="login-modal__input"
+              id="login-email-input"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+            />
+          </label>
+          <label
+            class="login-modal__field-label login-modal__code"
+            id="login-code-field"
+            hidden
+          >
+            Verification code
+            <input
+              class="login-modal__input"
+              id="login-code-input"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              placeholder="123456"
+            />
+          </label>
+          <div class="login-modal__error" id="login-email-error"></div>
+          <button
+            type="submit"
+            class="login-modal__submit"
+            id="login-email-submit"
+          >
+            Email me a code
+          </button>
+          <button type="button" class="login-modal__back" id="login-email-back">
+            Back to all options
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="hero-badge">30% off &middot; this weekend only</div>
+      <h1>
+        Save money <span class="highlight">without changing</span> how you live
+      </h1>
+      <p class="hero-sub">
+        Sugar finds where your money is quietly being lost on bills, loans,
+        insurance, and subscriptions. Then we move you to better deals.
+      </p>
+      <a href="#get-started" class="hero-cta">See what Sugar can find</a>
+      <p class="hero-note">This weekend: 30% off your membership, locked in for as long as you stay.</p>
+    </section>
+
+    <!-- ── Problem ── -->
+    <section class="problem">
+      <p class="problem-text">
+        Most people are overpaying and don't know it.
+        <span class="muted"
+          >Comparing every rate, reading every renewal, switching every
+          provider. Nobody has time for that.</span
+        >
+      </p>
+    </section>
+
+    <!-- ── How it works ── -->
+    <section class="how">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">Three steps. Zero effort from you.</h2>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Connect your email</h3>
+          <p>
+            Sugar securely reads your financial emails (bills, statements,
+            renewals, receipts) to build a full picture of what you're paying
+            and to whom.
+          </p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>We find the savings</h3>
+          <p>
+            We compare every rate, plan, and provider against the market. We
+            show you exactly where you're losing money and how much you could
+            save.
+          </p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>We make the switch</h3>
+          <p>
+            Sugar handles the switching, renegotiating, and consolidating. You
+            get better deals on everything, without lifting a finger.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What we cover ── -->
+    <section class="categories">
+      <div class="section-label">What we cover</div>
+      <h2 class="section-title">Every bill. Every provider. Every deal.</h2>
+      <div class="cat-grid">
+        <div class="cat-item">
+          <div class="cat-icon">&#9889;</div>
+          <span>Utilities</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#127968;</div>
+          <span>Mortgages</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#128179;</div>
+          <span>Debt &amp; Credit</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#128737;&#65039;</div>
+          <span>Insurance</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#128241;</div>
+          <span>Mobile &amp; Broadband</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#128176;</div>
+          <span>Personal Loans</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#127915;</div>
+          <span>Subscriptions</span>
+        </div>
+        <div class="cat-item">
+          <div class="cat-icon">&#127974;</div>
+          <span>Banking &amp; Savings</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Case study ── -->
+    <section class="case-study">
+      <div class="section-label">UK example</div>
+      <h2 class="section-title">What Sugar could find in a household budget.</h2>
+
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-avatar">L</div>
+          <div>
+            <div class="case-name">Household</div>
+            <div class="case-context">
+              Based in London, with providers that had not been reviewed in over two years.
+            </div>
+          </div>
+        </div>
+
+        <div class="case-total">
+          <div class="case-total-label">Total savings identified</div>
+          <div class="case-total-num">&pound;2,800 &ndash; &pound;6,000</div>
+          <div class="case-total-sub">per year</div>
+        </div>
+
+        <div class="leak">
+          <div class="leak-top">
+            <span class="leak-name">Mortgage renewal</span>
+            <span class="leak-saving">&pound;2,000 &ndash; &pound;4,000/yr</span>
+          </div>
+          <p class="leak-detail">
+            A fixed rate nearing expiry and due to move onto a higher standard
+            variable rate. Sugar flags the deadline and helps compare options.
+          </p>
+        </div>
+
+        <div class="leak">
+          <div class="leak-top">
+            <span class="leak-name">Insurance (3 policies)</span>
+            <span class="leak-saving">&pound;500 &ndash; &pound;1,500/yr</span>
+          </div>
+          <p class="leak-detail">
+            Car, home, and contents all auto-renewing without review.
+            Competitors were 15-30% cheaper for equivalent cover. Sugar ran the
+            comparison and switched.
+          </p>
+        </div>
+
+        <div class="leak">
+          <div class="leak-top">
+            <span class="leak-name">Energy</span>
+            <span class="leak-saving">&pound;300 &ndash; &pound;500/yr</span>
+          </div>
+          <p class="leak-detail">
+            Bills had jumped 38% year-on-year. Sugar compared providers, found a
+            better plan, and handled the switch.
+          </p>
+        </div>
+
+        <div class="case-footer">
+          <strong>The household did not have to change how it lived.</strong>
+          Sugar reviewed the money quietly leaking through old deals and
+          identified better options. These figures are examples, not a promise
+          of individual savings.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Benefits ── -->
+    <section class="benefits">
+      <div class="section-label">Why Sugar</div>
+      <h2 class="section-title">
+        Built for real people, not spreadsheet people.
+      </h2>
+      <div class="benefit-list">
+        <div class="benefit-card">
+          <div class="icon">&#128170;</div>
+          <h3>You don't have to change</h3>
+          <p>
+            Sugar doesn't ask you to budget harder, spend less, or become a
+            financial expert. We fix the deals, not your behaviour.
+          </p>
+        </div>
+        <div class="benefit-card">
+          <div class="icon">&#128269;</div>
+          <h3>Nothing gets missed</h3>
+          <p>
+            Every provider, every renewal, every rate. Sugar tracks it all so
+            you never quietly overpay again.
+          </p>
+        </div>
+        <div class="benefit-card">
+          <div class="icon">&#9201;</div>
+          <h3>It takes minutes, not months</h3>
+          <p>
+            Connect once. Sugar does the rest. No forms, no phone calls, no
+            comparing 15 tabs of provider websites.
+          </p>
+        </div>
+        <div class="benefit-card">
+          <div class="icon">&#128274;</div>
+          <h3>You only pay for results</h3>
+          <p>
+            If Sugar doesn't find the savings we promise, we refund the
+            difference. No questions asked.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pricing teaser ── -->
+    <section class="pricing-teaser" id="get-started">
+      <div class="pricing-card">
+        <div class="pricing-highlight">+&pound;4,000 /year</div>
+        <h3>Minimum savings guaranteed. Or we refund the difference.</h3>
+        <p>
+          Choose weekly, monthly, or annual billing for your 12-month
+          membership. If you're not happy for any reason in the first two
+          weeks, you can cancel.
+        </p>
+
+        <div
+          class="plan-options"
+          role="radiogroup"
+          aria-label="Membership billing cadence"
+        >
+          <button
+            type="button"
+            class="plan-option"
+            data-plan-option="weekly"
+            role="radio"
+            aria-checked="false"
+          >
+            <span class="plan-radio"></span>
+            <div>
+              <div class="plan-label">Weekly</div>
+              <div class="plan-sublabel">Billed weekly</div>
+            </div>
+            <div class="plan-price"><s style="color:#B8B2D0;font-weight:600">&pound;9</s> &pound;6.30 <span>/wk</span></div>
+          </button>
+          <button
+            type="button"
+            class="plan-option is-selected"
+            data-plan-option="monthly"
+            role="radio"
+            aria-checked="true"
+          >
+            <span class="plan-badge">Most popular</span>
+            <span class="plan-radio"></span>
+            <div>
+              <div class="plan-label">Monthly</div>
+              <div class="plan-sublabel">
+                Billed monthly &middot; 30% off for life
+              </div>
+            </div>
+            <div class="plan-price"><s style="color:#B8B2D0;font-weight:600">&pound;35</s> &pound;24.50 <span>/mo</span></div>
+          </button>
+          <button
+            type="button"
+            class="plan-option"
+            data-plan-option="annual"
+            role="radio"
+            aria-checked="false"
+          >
+            <span class="plan-badge" style="background: #241a54"
+              >Best value</span
+            >
+            <span class="plan-radio"></span>
+            <div>
+              <div class="plan-label">Annual</div>
+              <div class="plan-sublabel">
+                One payment &middot; 30% off for life
+              </div>
+            </div>
+            <div class="plan-price"><s style="color:#B8B2D0;font-weight:600">&pound;300</s> &pound;210 <span>/yr</span></div>
+          </button>
+        </div>
+
+        <div
+          class="checkout-status"
+          data-checkout-status
+          aria-live="polite"
+        ></div>
+        <button type="button" class="hero-cta" data-membership-checkout>
+          Claim 30% off &middot; &pound;24.50/mo
+        </button>
+        <p class="pricing-guarantee">
+          If Sugar doesn't find at least &pound;4,000 in savings over your 12-month membership:
+          <strong>refund the difference</strong>. No questions asked.
+        </p>
+        <div class="pricing-secondary">
+          <div class="mailbox-cta-row" aria-label="Connect your email provider">
+            <a
+              href="/connect-mailbox?provider=gmail"
+              class="mailbox-connect-button"
+            >
+              <span class="mailbox-connect-button__icon" aria-hidden="true"
+                >G</span
+              >
+              Connect Gmail
+            </a>
+            <a
+              href="/connect-mailbox?provider=outlook"
+              class="mailbox-connect-button"
+            >
+              <span
+                class="mailbox-connect-button__icon mailbox-connect-button__icon--outlook"
+                aria-hidden="true"
+                >O</span
+              >
+              Connect Outlook &amp; Hotmail
+            </a>
+            <a
+              href="/connect-mailbox?provider=imap"
+              class="mailbox-connect-button"
+            >
+              <span
+                class="mailbox-connect-button__icon mailbox-connect-button__icon--imap"
+                aria-hidden="true"
+                >E</span
+              >
+              Other email
+            </a>
+          </div>
+          <div class="email-context-banner" role="note">
+            <strong>80% faster</strong>
+            <span
+              >Connecting your email helps Sugar find likely savings
+              sooner.</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Final CTA ── -->
+    <section class="final-cta">
+      <h2>Stop overpaying for things you don't think about</h2>
+      <p>Share your bills once. Sugar finds the savings. You keep the money.</p>
+      <a href="#get-started" class="hero-cta">Get started</a>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a href="/" class="footer-logo">sugar</a>
+        <nav class="footer-nav">
+          <a href="/about">About</a>
+          <a href="/faq">FAQ</a>
+          <a href="/special-offer-1010/pricing">Pricing</a>
+          <a href="/customer-love">Customer Love</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+        </nav>
+        <div class="footer-email">
+          <a href="mailto:support@conciergebysugar.com"
+            >support@conciergebysugar.com</a
+          >
+        </div>
+        <p class="footer-copy">Conciergebysugar Ltd &middot; 41 Castlehaven Road, London, NW1 8RJ</p>
+        <p class="footer-copy">&copy; 2026 Sugar. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      ;(async () => {
+        const APP_NAME = 'sugar-concierge'
+        const CHECKOUT_RETURN_PARAM = 'membership'
+        const CHECKOUT_RETURN_VALUE = 'checkout'
+        const CHECKOUT_LOG_PREFIX = '[sugar-membership-checkout]'
+        const LOGGED_OUT_QUERY_PARAM = 'logged_out'
+        const JUST_LOGGED_OUT_STORAGE_KEY = 'sugar.just_logged_out'
+        const MEMBERSHIP_PLANS = {
+          weekly: {
+            label: 'Weekly',
+            cta: 'Claim 30% off · £6.30/wk',
+            product: 'debt_solve_membership_weekly',
+            frequency: 'weekly',
+            iterations: 52,
+            amountCents: 630
+          },
+          monthly: {
+            label: 'Monthly',
+            cta: 'Claim 30% off · £24.50/mo',
+            product: 'debt_solve_membership_monthly',
+            frequency: 'monthly',
+            iterations: 12,
+            amountCents: 2450
+          },
+          annual: {
+            label: 'Annual',
+            cta: 'Claim 30% off · £210/yr',
+            product: 'debt_solve_membership_annual',
+            frequency: 'monthly',
+            iterations: 1,
+            amountCents: 21000
+          }
+        }
+
+        const planOptions = Array.from(
+          document.querySelectorAll('[data-plan-option]')
+        )
+        const navAuthButton = document.getElementById('nav-auth-button')
+        const navGetStarted = document.getElementById('nav-get-started')
+        const navWelcome = document.getElementById('nav-welcome')
+        const loginModal = document.getElementById('login-choice-modal')
+        const loginModalBackdrop = document.getElementById(
+          'login-modal-backdrop'
+        )
+        const loginModalClose = document.getElementById('login-modal-close')
+        const loginProviderOptions = document.getElementById(
+          'login-provider-options'
+        )
+        const loginEmailForm = document.getElementById('login-email-form')
+        const loginEmailInput = document.getElementById('login-email-input')
+        const loginCodeField = document.getElementById('login-code-field')
+        const loginCodeInput = document.getElementById('login-code-input')
+        const loginEmailError = document.getElementById('login-email-error')
+        const loginEmailSubmit = document.getElementById('login-email-submit')
+        const loginEmailBack = document.getElementById('login-email-back')
+        const checkoutButton = document.querySelector(
+          '[data-membership-checkout]'
+        )
+        const statusEl = document.querySelector('[data-checkout-status]')
+        let selectedCadence = 'monthly'
+        let isCheckingOut = false
+        let navAuthMode = 'login'
+        let loginRedirectTo = `${window.location.origin}/dashboard`
+        let loginEmailState = null
+
+        function nowMs() {
+          return Math.round(
+            window.performance && typeof window.performance.now === 'function'
+              ? window.performance.now()
+              : Date.now()
+          )
+        }
+
+        function elapsedMs(startedAt) {
+          return Math.max(0, nowMs() - startedAt)
+        }
+
+        function createCheckoutAttemptId() {
+          if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+            return window.crypto.randomUUID()
+          }
+          return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+        }
+
+        function logCheckoutTiming(event, data = {}) {
+          if (!window.console || typeof window.console.info !== 'function')
+            return
+          window.console.info(CHECKOUT_LOG_PREFIX, {
+            event,
+            ...data
+          })
+        }
+
+        function normalizeBaseUrl(value) {
+          return String(value || '').replace(/\/+$/, '')
+        }
+
+        function buildLoggedOutUrl() {
+          const url = new URL('/', window.location.origin)
+          url.searchParams.set(LOGGED_OUT_QUERY_PARAM, '1')
+          return url.toString()
+        }
+
+        function markJustLoggedOut() {
+          try {
+            window.sessionStorage.setItem(JUST_LOGGED_OUT_STORAGE_KEY, '1')
+          } catch {}
+        }
+
+        function consumeJustLoggedOutHint() {
+          const params = new URLSearchParams(window.location.search)
+          let hinted = params.get(LOGGED_OUT_QUERY_PARAM) === '1'
+
+          try {
+            if (
+              window.sessionStorage.getItem(JUST_LOGGED_OUT_STORAGE_KEY) === '1'
+            ) {
+              hinted = true
+            }
+            window.sessionStorage.removeItem(JUST_LOGGED_OUT_STORAGE_KEY)
+          } catch {}
+
+          if (!hinted) return false
+
+          if (params.has(LOGGED_OUT_QUERY_PARAM)) {
+            params.delete(LOGGED_OUT_QUERY_PARAM)
+            const cleanSearch = params.toString()
+            const cleanUrl =
+              window.location.pathname +
+              (cleanSearch ? `?${cleanSearch}` : '') +
+              window.location.hash
+            window.history.replaceState({}, document.title, cleanUrl || '/')
+          }
+
+          return true
+        }
+
+        function getGatewayBase() {
+          const configured =
+            window.SUGAR_API_GATEWAY_URL || window.API_GATEWAY_URL
+          if (configured) return normalizeBaseUrl(configured)
+          if (window.location.hostname === 'localhost')
+            return 'http://localhost:9050'
+          return 'https://apigateway.conciergebysugar.com'
+        }
+
+        function setStatus(message, kind) {
+          if (!statusEl) return
+          statusEl.textContent = message || ''
+          statusEl.classList.toggle('is-error', kind === 'error')
+          statusEl.classList.toggle('is-success', kind === 'success')
+        }
+
+        function setLoading(value) {
+          isCheckingOut = value
+          if (!checkoutButton) return
+          checkoutButton.disabled = value
+          checkoutButton.classList.toggle('is-loading', value)
+          checkoutButton.textContent = value
+            ? 'Opening secure checkout...'
+            : MEMBERSHIP_PLANS[selectedCadence].cta
+        }
+
+        function selectPlan(cadence) {
+          if (!MEMBERSHIP_PLANS[cadence] || isCheckingOut) return
+          selectedCadence = cadence
+          planOptions.forEach((option) => {
+            const selected = option.dataset.planOption === cadence
+            option.classList.toggle('is-selected', selected)
+            option.setAttribute('aria-checked', selected ? 'true' : 'false')
+          })
+          if (checkoutButton)
+            checkoutButton.textContent = MEMBERSHIP_PLANS[cadence].cta
+          setStatus('')
+        }
+
+        function buildReturnPath(cadence, paidStatus) {
+          const params = new URLSearchParams({
+            payment_mode: 'plan',
+            offer: 'membership',
+            cadence
+          })
+          if (paidStatus) params.set('paid', paidStatus)
+          return `/dashboard?${params.toString()}`
+        }
+
+        function buildAuthReturnUrl(cadence) {
+          const url = new URL('/dashboard', window.location.origin)
+          url.searchParams.set(CHECKOUT_RETURN_PARAM, CHECKOUT_RETURN_VALUE)
+          url.searchParams.set('cadence', cadence)
+          return url.toString()
+        }
+
+        function getFirstName(value) {
+          return String(value || '')
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)[0]
+        }
+
+        function setNavAuthState(session) {
+          const loggedIn = Boolean(session && session.loggedIn)
+          const rawUser = (session && (session.user || session)) || null
+          const rawName =
+            rawUser &&
+            (rawUser.name ||
+              rawUser.displayName ||
+              rawUser.display_name ||
+              rawUser.given_name ||
+              rawUser.full_name ||
+              rawUser.nickname)
+          const rawEmail =
+            rawUser && typeof rawUser.email === 'string' ? rawUser.email : ''
+          const firstName =
+            getFirstName(rawName) ||
+            getFirstName(rawEmail ? rawEmail.split('@')[0] : '') ||
+            'there'
+
+          navAuthMode = loggedIn ? 'logout' : 'login'
+
+          if (navWelcome) {
+            navWelcome.hidden = !loggedIn
+            navWelcome.textContent = loggedIn ? `Welcome ${firstName}!` : ''
+          }
+
+          if (navGetStarted) {
+            navGetStarted.hidden = !loggedIn
+          }
+
+          if (navAuthButton) {
+            navAuthButton.textContent = loggedIn ? 'Logout' : 'Login'
+            navAuthButton.setAttribute(
+              'aria-label',
+              loggedIn ? 'Logout' : 'Login'
+            )
+          }
+        }
+
+        function buildAuthStartUrl(provider, redirectTo) {
+          const authPath =
+            provider === 'outlook'
+              ? '/auth-service/api/v1/auth/outlook'
+              : provider === 'apple'
+                ? '/auth-service/api/v1/auth/apple'
+                : '/auth-service/api/v1/auth/google'
+          const authUrl = new URL(authPath, getGatewayBase())
+          authUrl.searchParams.set('redirect_uri', redirectTo)
+          authUrl.searchParams.set('app_name', APP_NAME)
+
+          return authUrl
+        }
+
+        function startOAuthLogin(provider, redirectTo) {
+          window.location.assign(
+            buildAuthStartUrl(provider, redirectTo).toString()
+          )
+        }
+
+        function setLoginEmailError(message) {
+          if (!loginEmailError) return
+          loginEmailError.textContent = message || ''
+        }
+
+        function setLoginEmailLoading(value) {
+          if (!loginEmailSubmit) return
+          loginEmailSubmit.disabled = value
+          loginEmailSubmit.textContent = value
+            ? 'Please wait'
+            : loginEmailState
+              ? 'Verify and continue'
+              : 'Email me a code'
+        }
+
+        function resetLoginEmailForm() {
+          loginEmailState = null
+          setLoginEmailError('')
+          if (loginEmailInput) {
+            loginEmailInput.disabled = false
+            loginEmailInput.value = ''
+          }
+          if (loginCodeInput) loginCodeInput.value = ''
+          if (loginCodeField) loginCodeField.hidden = true
+          setLoginEmailLoading(false)
+        }
+
+        function showLoginProviderOptions() {
+          if (loginProviderOptions) loginProviderOptions.hidden = false
+          if (loginEmailForm) loginEmailForm.hidden = true
+          resetLoginEmailForm()
+        }
+
+        function showLoginEmailForm() {
+          if (loginProviderOptions) loginProviderOptions.hidden = true
+          if (loginEmailForm) loginEmailForm.hidden = false
+          setLoginEmailError('')
+          if (loginEmailInput) loginEmailInput.focus()
+        }
+
+        function openLoginModal(redirectTo) {
+          loginRedirectTo = redirectTo || `${window.location.origin}/dashboard`
+          showLoginProviderOptions()
+          if (loginModal) loginModal.classList.add('is-open')
+        }
+
+        function closeLoginModal() {
+          if (loginModal) loginModal.classList.remove('is-open')
+          showLoginProviderOptions()
+        }
+
+        function startNavLogin() {
+          openLoginModal(`${window.location.origin}/dashboard`)
+        }
+
+        async function requestLoginEmailCode() {
+          const email = String((loginEmailInput && loginEmailInput.value) || '')
+            .trim()
+            .toLowerCase()
+          if (!/.+@.+\..+/.test(email)) {
+            setLoginEmailError('Enter a valid email address.')
+
+            return
+          }
+
+          setLoginEmailError('')
+          setLoginEmailLoading(true)
+          try {
+            const response = await fetch(
+              `${getGatewayBase()}/auth-service/api/v1/auth/email/request`,
+              {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  email,
+                  app_name: APP_NAME,
+                  redirect_uri: loginRedirectTo
+                })
+              }
+            )
+            const payload = await response.json().catch(() => ({}))
+            if (!response.ok || typeof payload.state !== 'string') {
+              throw new Error('email_request_failed')
+            }
+            loginEmailState = payload.state
+            if (loginEmailInput) {
+              loginEmailInput.value = email
+              loginEmailInput.disabled = true
+            }
+            if (loginCodeField) loginCodeField.hidden = false
+            if (loginCodeInput) loginCodeInput.focus()
+          } catch {
+            setLoginEmailError('We could not send a code to that email.')
+          } finally {
+            setLoginEmailLoading(false)
+          }
+        }
+
+        async function verifyLoginEmailCode() {
+          const email = String((loginEmailInput && loginEmailInput.value) || '')
+            .trim()
+            .toLowerCase()
+          const otp = String(
+            (loginCodeInput && loginCodeInput.value) || ''
+          ).trim()
+
+          if (!loginEmailState || !otp) {
+            setLoginEmailError('Enter the code from your email.')
+
+            return
+          }
+
+          setLoginEmailError('')
+          setLoginEmailLoading(true)
+          try {
+            const response = await fetch(
+              `${getGatewayBase()}/auth-service/api/v1/auth/email/verify`,
+              {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  state: loginEmailState,
+                  email,
+                  otp,
+                  app_name: APP_NAME,
+                  redirect_uri: loginRedirectTo
+                })
+              }
+            )
+            if (!response.ok) throw new Error('email_verify_failed')
+            window.location.assign(loginRedirectTo)
+          } catch {
+            setLoginEmailError(
+              'That code did not work. Check it and try again.'
+            )
+            setLoginEmailLoading(false)
+          }
+        }
+
+        async function handleLoginEmailSubmit(event) {
+          event.preventDefault()
+          if (loginEmailState) {
+            await verifyLoginEmailCode()
+
+            return
+          }
+
+          await requestLoginEmailCode()
+        }
+
+        function handleProviderSelection(provider) {
+          if (provider === 'email') {
+            showLoginEmailForm()
+
+            return
+          }
+
+          startOAuthLogin(provider, loginRedirectTo)
+        }
+
+        async function startNavLogout() {
+          markJustLoggedOut()
+          try {
+            await fetch(`${getGatewayBase()}/auth-service/api/v1/auth/logout`, {
+              method: 'POST',
+              credentials: 'include'
+            })
+          } catch {}
+          window.location.assign(buildLoggedOutUrl())
+        }
+
+        async function loadNavSession() {
+          try {
+            const response = await fetch(
+              `${getGatewayBase()}/auth-service/api/v1/session/me`,
+              {
+                credentials: 'include'
+              }
+            )
+            if (!response.ok) {
+              setNavAuthState(null)
+              return false
+            }
+            const payload = await response.json().catch(() => null)
+            setNavAuthState(payload)
+            if (payload && payload.loggedIn) {
+              window.location.replace(
+                `/dashboard${window.location.search}${window.location.hash}`
+              )
+
+              return true
+            }
+            return false
+          } catch {
+            setNavAuthState(null)
+            return false
+          }
+        }
+
+        function redirectToAuth(cadence) {
+          try {
+            window.localStorage.setItem(
+              'sugar_membership_checkout',
+              JSON.stringify({ cadence, updatedAt: Date.now() })
+            )
+          } catch {}
+          openLoginModal(buildAuthReturnUrl(cadence))
+        }
+
+        async function startCheckout(cadence = selectedCadence, admission = null) {
+          const plan = MEMBERSHIP_PLANS[cadence] || MEMBERSHIP_PLANS.monthly
+          const attemptId = createCheckoutAttemptId()
+          const flowStartedAt = nowMs()
+          setLoading(true)
+          setStatus('Creating your secure Stripe checkout...')
+          logCheckoutTiming('checkout_started', {
+            attemptId,
+            cadence,
+            product: plan.product
+          })
+
+          try {
+            const gatewayBase = getGatewayBase()
+            const checkoutStartedAt = nowMs()
+            const response = await fetch(
+              `${gatewayBase}/payment-service/api/v1/payments/concierge/payment-plans`,
+              {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  'x-app-name': APP_NAME
+                },
+                body: JSON.stringify({
+                  app_base_url: window.location.origin,
+                  payment_service_base_url: `${gatewayBase}/payment-service/api/v1`,
+                  app_name: APP_NAME,
+                  success_path: buildReturnPath(cadence, 'success'),
+                  cancel_path: buildReturnPath(cadence, 'cancel'),
+                  checkout_attempt_id: attemptId,
+                  client_before_checkout_ms: elapsedMs(flowStartedAt),
+                  product: plan.product,
+                  frequency: plan.frequency,
+                  iterations: plan.iterations,
+                  amount_cents: plan.amountCents,
+                  country: 'UK',
+                  invite_email:
+                    admission && admission.email ? admission.email : null,
+                  invited_by_email:
+                    admission && admission.inviterEmail
+                      ? admission.inviterEmail
+                      : null,
+                  invite_code:
+                    admission && admission.code ? admission.code : null
+                })
+              }
+            )
+
+            const payload = await response.json().catch(() => ({}))
+            const checkoutApiMs = elapsedMs(checkoutStartedAt)
+            logCheckoutTiming('checkout_api_complete', {
+              attemptId,
+              durationMs: checkoutApiMs,
+              totalMs: elapsedMs(flowStartedAt),
+              status: response.status,
+              alreadyPaid: Boolean(payload.alreadyPaid),
+              hasCheckoutUrl: Boolean(
+                payload.url || payload.payment_plan?.checkout_url
+              )
+            })
+            if (response.status === 401) {
+              setStatus('Redirecting to sign in first...')
+              logCheckoutTiming('auth_redirect_start', {
+                attemptId,
+                totalMs: elapsedMs(flowStartedAt),
+                checkoutApiMs
+              })
+              redirectToAuth(cadence)
+              return
+            }
+            if (!response.ok) {
+              throw new Error(payload.error || 'checkout_failed')
+            }
+            if (payload.alreadyPaid) {
+              setStatus('Your membership is already active.', 'success')
+              setLoading(false)
+              logCheckoutTiming('membership_already_active', {
+                attemptId,
+                totalMs: elapsedMs(flowStartedAt),
+                checkoutApiMs
+              })
+              return
+            }
+
+            const checkoutUrl =
+              payload.url || payload.payment_plan?.checkout_url
+            if (!checkoutUrl) throw new Error('checkout_url_missing')
+
+            logCheckoutTiming('stripe_redirect_start', {
+              attemptId,
+              totalMs: elapsedMs(flowStartedAt),
+              checkoutApiMs
+            })
+            window.location.assign(checkoutUrl)
+          } catch (error) {
+            logCheckoutTiming('checkout_failed', {
+              attemptId,
+              totalMs: elapsedMs(flowStartedAt),
+              error: error && error.message ? error.message : 'checkout_failed'
+            })
+            setStatus(
+              'Checkout could not be started. Please try again.',
+              'error'
+            )
+            setLoading(false)
+          }
+        }
+
+        planOptions.forEach((option) => {
+          option.addEventListener('click', () =>
+            selectPlan(option.dataset.planOption)
+          )
+        })
+
+        if (navAuthButton) {
+          navAuthButton.addEventListener('click', () => {
+            if (navAuthMode === 'logout') {
+              startNavLogout()
+              return
+            }
+            startNavLogin()
+          })
+        }
+
+        if (loginModalBackdrop) {
+          loginModalBackdrop.addEventListener('click', closeLoginModal)
+        }
+
+        if (loginModalClose) {
+          loginModalClose.addEventListener('click', closeLoginModal)
+        }
+
+        if (loginProviderOptions) {
+          loginProviderOptions.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-login-provider]')
+            if (!button) return
+            handleProviderSelection(button.dataset.loginProvider)
+          })
+        }
+
+        if (loginEmailForm) {
+          loginEmailForm.addEventListener('submit', (event) => {
+            handleLoginEmailSubmit(event)
+          })
+        }
+
+        if (loginEmailBack) {
+          loginEmailBack.addEventListener('click', showLoginProviderOptions)
+        }
+
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeLoginModal()
+        })
+
+        if (checkoutButton) {
+          checkoutButton.addEventListener('click', async () => {
+            const g = window.NZInviteGate
+            const admission =
+              g && typeof g.getAdmission === 'function'
+                ? g.getAdmission()
+                : null
+            const goInvite = () =>
+              window.location.assign(
+                '/invite?next=' +
+                  encodeURIComponent(window.location.pathname + '#get-started')
+              )
+            if (!admission || !admission.admitted || !admission.email) {
+              goInvite()
+              return
+            }
+            // Server-verify the stored admission (not just a forgeable client
+            // flag): the email must be on the invite list or a paying customer.
+            let eligible = false
+            try {
+              const status = await g.check(admission.email)
+              eligible = status === 'invited' || status === 'paying'
+            } catch (e) {
+              eligible = false
+            }
+            if (eligible) {
+              startCheckout(selectedCadence, admission)
+              return
+            }
+            goInvite()
+          })
+        }
+
+        const justLoggedOut = consumeJustLoggedOutHint()
+        if (justLoggedOut) {
+          setNavAuthState(null)
+        } else {
+          const shouldRedirectToDashboard = await loadNavSession()
+          if (shouldRedirectToDashboard) return
+        }
+
+        const params = new URLSearchParams(window.location.search)
+        const requestedCadence = params.get('cadence')
+        if (MEMBERSHIP_PLANS[requestedCadence]) selectPlan(requestedCadence)
+
+        if (params.get('paid') === 'success') {
+          setStatus(
+            'Payment received. Your Sugar membership is active.',
+            'success'
+          )
+        } else if (params.get('paid') === 'cancel') {
+          setStatus(
+            'Checkout cancelled. Pick a plan when you are ready.',
+            'error'
+          )
+        } else if (
+          params.get(CHECKOUT_RETURN_PARAM) === CHECKOUT_RETURN_VALUE
+        ) {
+          window.setTimeout(() => startCheckout(selectedCadence), 250)
+        }
+      })()
+    </script>
+  </body>
+</html>

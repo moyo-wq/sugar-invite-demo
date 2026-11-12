@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Sugar Concierge | Find and Fix Overpayments</title>
+  <meta name="description" content="Sugar Concierge helps you find where you're overpaying on bills, debts, insurance, mortgages, and subscriptions — and move to better options." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!-- Marketing-site analytics (PostHog and Google Ads) -->
+  <script src="/assets/analytics.js?v=20261102"></script>
+    <script src="/assets/nz-invite.js?v=6"></script>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Bricolage Grotesque', Arial, Helvetica, sans-serif;
+      background: #ECEAF8;
+      color: #241A54;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      background: rgba(236, 234, 248, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: #9B86EA;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: #241A54;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-link:hover { color: #9B86EA; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: #9B86EA;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 0 0 #221A51;
+    }
+
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 #221A51; }
+    .nav-cta:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #221A51; }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 2;
+    }
+
+    /* ── Section layout ── */
+    section {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9B86EA;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 56px;
+      max-width: 540px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding-top: 160px;
+      padding-bottom: 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #fff;
+      color: #9B86EA;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    .hero h1 .highlight { color: #9B86EA; }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: #6E6883;
+      line-height: 1.6;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── Steps (What we do) ── */
+    .steps-section {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .step-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #F0EFFA;
+      color: #9B86EA;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .step-card p {
+      font-size: 14px;
+      color: #6E6883;
+      line-height: 1.65;
+    }
+
+    /* ── Approach ── */
+    .approach {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .approach-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 48px 44px;
+      box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .approach-card h2 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    .approach-card .body-text {
+      font-size: 15px;
+      color: #6E6883;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .approach-card .body-text:last-of-type { margin-bottom: 0; }
+
+    .feature-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .feature-row:last-child { margin-bottom: 0; }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #F0EFFA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .feature-row h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .feature-row p {
+      font-size: 14px;
+      color: #6E6883;
+      line-height: 1.6;
+    }
+
+    /* ── Trust ── */
+    .trust {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .trust-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06);
+    }
+
+    .trust-card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #F0EFFA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .trust-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .trust-card p {
+      font-size: 14px;
+      color: #6E6883;
+      line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .final-cta {
+      padding-top: 80px;
+      padding-bottom: 120px;
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1px;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .final-cta p {
+      font-size: 16px;
+      color: #6E6883;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 18px 36px;
+      border-radius: 50px;
+      border: none;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      background: #9B86EA;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 6px 0 0 #221A51;
+      text-decoration: none;
+    }
+
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 0 0 #221A51; }
+    .hero-cta:active { transform: translateY(3px); box-shadow: 0 3px 0 0 #221A51; }
+
+    /* ── Footer ── */
+    .site-footer {
+      border-top: 1px solid #D6D3E8;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #9B86EA;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    .footer-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .footer-nav a {
+      font-size: 14px;
+      font-weight: 600;
+      color: #241A54;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-nav a:hover { color: #9B86EA; }
+
+    .footer-email { margin-bottom: 20px; }
+
+    .footer-email a {
+      font-size: 14px;
+      color: #9B86EA;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-email a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      font-size: 13px;
+      color: #B8B2D0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .site-nav { padding: 14px 20px; }
+      .nav-logo { font-size: 22px; }
+
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+
+      .nav-links.is-open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background: #ECEAF8;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 16px 24px 28px;
+        gap: 0;
+        align-items: stretch;
+        border-bottom: 1px solid rgba(36, 26, 84, 0.1);
+        box-shadow: 0 18px 36px rgba(36, 26, 84, 0.12);
+      }
+
+      .nav-links.is-open .nav-link {
+        display: block;
+        padding: 12px 0;
+        font-size: 16px;
+        text-align: center;
+        border-bottom: 1px solid #D6D3E8;
+      }
+
+      .nav-links.is-open .nav-cta {
+        display: flex;
+        width: 100%;
+        max-width: 340px;
+        min-height: 44px;
+        margin-top: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 6px;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .steps { grid-template-columns: 1fr; gap: 16px; }
+      .trust-grid { grid-template-columns: 1fr; gap: 16px; }
+
+      .approach-card { padding: 28px 20px; }
+      .approach-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="site-nav">
+    <a href="/" class="nav-logo">sugar</a>
+    <div class="nav-links" id="nav-links">
+      <a href="/about" class="nav-link">About</a>
+      <a href="/how-it-works" class="nav-link">How it works</a>
+      <a href="/faq" class="nav-link">FAQ</a>
+      <a href="/pricing" class="nav-link">Pricing</a>
+      <a href="/customer-love" class="nav-link">Customer Love</a>
+      <a href="/connect-email" class="nav-link">Connect Email</a>
+      <a href="/#get-started" class="nav-cta">Get started</a>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('nav-links').classList.toggle('is-open')" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#241A54" stroke-width="2" stroke-linecap="round" width="28" height="28">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">About Sugar Concierge</div>
+    <h1>We believe no one should <span class="highlight">overpay</span> for the things they don't think about</h1>
+    <p class="hero-sub">Sugar Concierge reviews your bills, debts, insurance, mortgages, and subscriptions to find where you're overpaying and help you move to better options.</p>
+  </section>
+
+  <!-- ── What we do ── -->
+  <section class="steps-section">
+    <div class="section-label">What we do</div>
+    <h2 class="section-title">Your bills are our problem now.</h2>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>We scan your finances</h3>
+        <p>Connect your email and Sugar reads your bills, statements, renewals, and receipts. We build a complete picture of what you're paying and to whom.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>We find better deals</h3>
+        <p>Every rate, plan, and provider is compared against the market. We show you exactly where you're losing money and how much you could save.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>We make the switch</h3>
+        <p>Sugar handles the switching, renegotiating, and consolidating. You get better deals on everything, without lifting a finger.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Our approach ── -->
+  <section class="approach">
+    <div class="approach-card">
+      <div class="approach-grid">
+        <div>
+          <div class="section-label">Our approach</div>
+          <h2>We fix the deals, not your behaviour.</h2>
+          <p class="body-text">Most financial tools ask you to budget harder, track every pound, or cut things out. Sugar takes a different approach: we review the rates and deals you already have, compare them with current UK options, and show you where you could pay less.</p>
+          <p class="body-text">Every provider, every renewal, every rate. Sugar tracks it all so you never quietly overpay again. If we don't save you money, we refund the difference. No questions asked.</p>
+        </div>
+        <div>
+          <div class="feature-row">
+            <div class="feature-icon">&#128170;</div>
+            <div>
+              <h3>No budgeting required</h3>
+              <p>We don't ask you to change how you spend. We change what you pay.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon">&#128274;</div>
+            <div>
+              <h3>Read-only access</h3>
+              <p>We never send, delete, or modify your emails. Your inbox stays untouched.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon">&#128137;</div>
+            <div>
+              <h3>Privacy-first</h3>
+              <p>We store only the data needed to find savings. No ads, no selling your data, ever.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trust & Security ── -->
+  <section class="trust">
+    <div class="section-label">Trust &amp; Security</div>
+    <h2 class="section-title">Your data is safe with us.</h2>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="icon">&#128272;</div>
+        <h3>Industry-standard encryption</h3>
+        <p>All data is encrypted in transit and at rest. We use industry-standard security practices to protect your information.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128065;</div>
+        <h3>No human reads your email</h3>
+        <p>Our systems automatically identify financial documents. No human reviews your email content unless you explicitly ask for help.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128683;</div>
+        <h3>No ads. No data selling.</h3>
+        <p>We make money by helping you save money. That's it. Your data is never sold or used for advertising purposes.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128260;</div>
+        <h3>Disconnect anytime</h3>
+        <p>You're always in control. Unlink your email in one click, and revoke access from your Google account settings at any time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing ── -->
+  <section class="trust">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">We only win when you save.</h2>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="icon">&#128176;</div>
+        <h3>&pound;9/week, &pound;35/month, or &pound;300/year</h3>
+        <p>Choose weekly, monthly, or annual billing. Every option is a 12-month membership, and you can cancel in the first two weeks if you're not happy.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128200;</div>
+        <h3>Refunds below &pound;4,000</h3>
+        <p>If we save you under &pound;4,000, we compare 10% of those savings with the membership amount you paid and refund the difference.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#127919;</div>
+        <h3>First &pound;4,000 covered</h3>
+        <p>Your membership covers the first &pound;4,000 in savings. Above that, we charge a 10% success fee. You keep 90% of everything extra.</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128184;</div>
+        <h3>Refund guarantee</h3>
+        <p>If we save you &pound;2,000, our fee is &pound;200. If you've paid more than &pound;200, we refund the difference. We refund what we can't earn. <a href="/pricing" style="color:#9B86EA;text-decoration:underline;">See full details</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Final CTA ── -->
+  <section class="final-cta">
+    <h2>Ready to stop overpaying?</h2>
+    <p>Share your bills once. Sugar finds the savings. You keep the money.</p>
+    <a href="/#get-started" class="hero-cta">Get started</a>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo">sugar</a>
+      <nav class="footer-nav">
+        <a href="/about">About</a>
+        <a href="/how-it-works">How it works</a>
+        <a href="/faq">FAQ</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/customer-love">Customer Love</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </nav>
+      <div class="footer-email">
+        <a href="mailto:support@conciergebysugar.com">support@conciergebysugar.com</a>
+      </div>
+      <p class="footer-copy">Conciergebysugar Ltd &middot; 41 Castlehaven Road, London, NW1 8RJ</p>
+      <p class="footer-copy">&copy; 2026 Sugar Concierge. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

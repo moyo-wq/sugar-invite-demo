@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect Email | Sugar</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Marketing-site analytics (PostHog and Google Ads) -->
+    <script src="/assets/analytics.js?v=20261102"></script>
+    <script src="/assets/nz-invite.js?v=6"></script>
+    <meta
+      name="description"
+      content="Connect Gmail, Outlook &amp; Hotmail, or another email account to Sugar so we can scan bills, renewals, subscriptions, and insurance for likely savings."
+    />
+    <link rel="stylesheet" href="/assets/fonts/fonts.css" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --surface: #fff;
+        --paper: #fbfaff;
+        --page: #eceaf8;
+        --ink: #241a54;
+        --ink-2: #4e4770;
+        --muted: #756f8d;
+        --ghost: #f0effa;
+        --purple: #9b86ea;
+        --purple-deep: #6b5cc5;
+        --shadow: #221a51;
+        --line: rgba(36, 26, 84, 0.14);
+        --danger-bg: #fff4ef;
+        --danger: #9a4d2f;
+      }
+
+      html {
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100dvh;
+        font-family: 'Bricolage Grotesque', Arial, Helvetica, sans-serif;
+        background:
+          radial-gradient(
+            circle at 18% 16%,
+            rgba(155, 134, 234, 0.2),
+            transparent 30%
+          ),
+          linear-gradient(180deg, #f7f5ff 0%, var(--page) 100%);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .site-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 32px;
+        background: rgba(236, 234, 248, 0.84);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .nav-logo {
+        color: var(--purple);
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+
+      .nav-link {
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus-visible {
+        color: var(--purple-deep);
+      }
+
+      main {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 112px 22px 48px;
+      }
+
+      .connect-shell {
+        width: min(100%, 430px);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow:
+          0 24px 80px rgba(36, 26, 84, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        padding: 12px;
+      }
+
+      .connect-panel {
+        min-height: 640px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 26px;
+        background: var(--paper);
+        padding: 28px 22px 22px;
+      }
+
+      .connect-hero {
+        display: grid;
+        place-items: center;
+        margin: 2px 0 16px;
+      }
+
+      .mailstack {
+        position: relative;
+        width: 280px;
+        height: 124px;
+      }
+
+      .mailcard {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: var(--surface);
+        box-shadow:
+          0 1px 0 rgba(31, 27, 77, 0.04),
+          0 6px 18px rgba(31, 27, 77, 0.08);
+      }
+
+      .mailcard:nth-child(1) {
+        top: 0;
+        opacity: 0.62;
+        transform: rotate(-3deg) scale(0.94);
+        transform-origin: 50% 0;
+      }
+
+      .mailcard:nth-child(2) {
+        top: 30px;
+        opacity: 0.86;
+        transform: rotate(2deg) scale(0.97);
+        transform-origin: 50% 0;
+      }
+
+      .mailcard:nth-child(3) {
+        top: 64px;
+        border: 1px solid rgba(126, 107, 226, 0.18);
+        transform: rotate(-1deg);
+      }
+
+      .mailcard-icon {
+        width: 26px;
+        height: 26px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        background: var(--ghost);
+        color: var(--purple-deep);
+      }
+
+      .mailcard-tag {
+        padding: 3px 8px 2px;
+        border-radius: 999px;
+        background: var(--ghost);
+        color: var(--purple-deep);
+        font-family:
+          'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .mailcard-from {
+        min-width: 0;
+        overflow: hidden;
+        color: var(--ink);
+        font-size: 12.5px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .scanline {
+        position: absolute;
+        left: -6%;
+        right: -6%;
+        height: 2px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(126, 107, 226, 0.85) 50%,
+          transparent
+        );
+        filter: blur(0.5px);
+        pointer-events: none;
+        animation: scanline 2.4s ease-in-out infinite;
+      }
+
+      @keyframes scanline {
+        0% {
+          top: 0;
+          opacity: 0;
+        }
+        18% {
+          opacity: 0.95;
+        }
+        82% {
+          opacity: 0.95;
+        }
+        100% {
+          top: 100%;
+          opacity: 0;
+        }
+      }
+
+      .kicker {
+        color: var(--purple-deep);
+        font-family:
+          'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 14px auto 10px;
+        max-width: 350px;
+        color: var(--ink);
+        font-size: 38px;
+        font-weight: 800;
+        letter-spacing: 0;
+        line-height: 0.98;
+        text-align: center;
+      }
+
+      h1 em {
+        color: var(--purple);
+        font-style: normal;
+      }
+
+      .support {
+        max-width: 340px;
+        margin: 0 auto 18px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+        text-align: center;
+      }
+
+      .required {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 0 0 18px;
+        padding: 12px 13px;
+        border: 1px solid rgba(126, 107, 226, 0.16);
+        border-radius: 16px;
+        background: #f7f5ff;
+        color: var(--ink-2);
+        font-size: 12.5px;
+        line-height: 1.38;
+      }
+
+      .required strong {
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      .required-mark {
+        flex: 0 0 22px;
+        width: 22px;
+        height: 22px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--purple-deep);
+        color: #fff;
+        font-family:
+          'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .connect-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .connect-row {
+        appearance: none;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px 10px 10px;
+        border: 2px solid transparent;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(36, 26, 84, 0.06);
+        color: var(--ink);
+        cursor: pointer;
+        font-family: inherit;
+        text-align: left;
+        text-decoration: none;
+        transition:
+          background 160ms ease,
+          border-color 160ms ease,
+          box-shadow 160ms ease,
+          transform 160ms ease;
+      }
+
+      .connect-row:hover,
+      .connect-row:focus-visible,
+      .connect-row.is-loading {
+        border-color: var(--purple-deep);
+        background: linear-gradient(180deg, #fff 0%, #f4f0ff 100%);
+        box-shadow:
+          inset 0 0 0 2px rgba(126, 107, 226, 0.18),
+          7px 8px 0 rgba(126, 107, 226, 0.26);
+        outline: none;
+        transform: translate(-1px, -1px);
+      }
+
+      .connect-row.is-disabled {
+        cursor: wait;
+        opacity: 0.64;
+        pointer-events: none;
+      }
+
+      .connect-avatar {
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .connect-avatar--gmail {
+        background: linear-gradient(135deg, #ea4335, #fbbc04);
+      }
+
+      .connect-avatar--outlook {
+        background: linear-gradient(135deg, #0078d4, #0364b8);
+      }
+
+      .connect-avatar--imap {
+        background: linear-gradient(135deg, #6d46d8, #27b3a8);
+      }
+
+      .connect-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .connect-copy strong,
+      .connect-copy small {
+        display: block;
+      }
+
+      .connect-copy strong {
+        color: var(--ink);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .connect-copy small {
+        margin-top: 1px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .connect-row svg {
+        flex: 0 0 auto;
+        color: var(--muted);
+      }
+
+      .connect-row:hover svg,
+      .connect-row:focus-visible svg,
+      .connect-row.is-loading svg {
+        color: var(--purple-deep);
+      }
+
+      .connect-spinner {
+        flex: 0 0 17px;
+        width: 17px;
+        height: 17px;
+        border: 2px solid var(--ghost);
+        border-top-color: var(--purple-deep);
+        border-radius: 999px;
+        animation: spin 850ms linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .connect-error {
+        display: none;
+        margin-top: 12px;
+        padding: 10px 13px;
+        border-radius: 14px;
+        background: var(--danger-bg);
+        color: var(--danger);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+
+      .connect-error.is-visible {
+        display: block;
+      }
+
+      .trust {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-top: 18px;
+        padding: 12px 10px;
+        border-radius: 14px;
+        background: var(--ghost);
+      }
+
+      .trust-item {
+        text-align: center;
+      }
+
+      .trust-key {
+        color: var(--purple-deep);
+        font-family:
+          'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .trust-value {
+        margin-top: 3px;
+        color: var(--ink-2);
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .bottom-note {
+        margin-top: auto;
+        padding-top: 22px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+        text-align: center;
+      }
+
+      .bottom-note a {
+        color: var(--purple-deep);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      @media (max-width: 560px) {
+        .site-nav {
+          padding: 16px 20px;
+        }
+
+        .nav-logo {
+          font-size: 23px;
+        }
+
+        main {
+          padding: 92px 12px 24px;
+        }
+
+        .connect-shell {
+          border-radius: 28px;
+          padding: 8px;
+        }
+
+        .connect-panel {
+          min-height: calc(100dvh - 124px);
+          border-radius: 22px;
+          padding: 24px 16px 18px;
+        }
+
+        .mailstack {
+          width: 250px;
+        }
+
+        h1 {
+          font-size: 34px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/" class="nav-logo">Sugar</a>
+      <a href="/" class="nav-link">Back to home</a>
+    </nav>
+
+    <main>
+      <section class="connect-shell" aria-labelledby="connect-title">
+        <div class="connect-panel">
+          <div class="connect-hero" aria-hidden="true">
+            <div class="mailstack">
+              <div class="mailcard">
+                <span class="mailcard-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="2.5"
+                      y="5"
+                      width="19"
+                      height="14"
+                      rx="2.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M3 6.5l9 6.5 9-6.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="mailcard-tag">Renewal</span>
+                <span class="mailcard-from">AA Insurance</span>
+              </div>
+              <div class="mailcard">
+                <span class="mailcard-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="2.5"
+                      y="5"
+                      width="19"
+                      height="14"
+                      rx="2.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M3 6.5l9 6.5 9-6.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="mailcard-tag">Bill</span>
+                <span class="mailcard-from">Contact Energy</span>
+              </div>
+              <div class="mailcard">
+                <span class="mailcard-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="2.5"
+                      y="5"
+                      width="19"
+                      height="14"
+                      rx="2.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M3 6.5l9 6.5 9-6.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="mailcard-tag">Plan</span>
+                <span class="mailcard-from">Spark Mobile</span>
+              </div>
+              <span class="scanline"></span>
+            </div>
+          </div>
+
+          <div class="kicker">Read-only scan</div>
+          <h1 id="connect-title">Connect your <em>main inbox.</em></h1>
+          <p class="support">
+            Sign in first, then connect your inbox with read-only access. Sugar finds bills, renewals, subscriptions, and
+            insurance we can check for savings.
+          </p>
+
+          <div class="required" role="note">
+            <span class="required-mark" aria-hidden="true">!</span>
+            <span>
+              Use the email where your
+              <strong>bills, subscriptions, insurance, and renewals</strong>
+              arrive. If that is a different address, connect that one.
+            </span>
+          </div>
+
+          <div class="connect-list" aria-label="Connect your email provider">
+            <a
+              class="connect-row"
+              href="/connect-mailbox?provider=gmail"
+              data-provider="gmail"
+            >
+              <span
+                class="connect-avatar connect-avatar--gmail"
+                aria-hidden="true"
+                >G</span
+              >
+              <span class="connect-copy">
+                <strong>Gmail</strong>
+                <small>Main Google inbox</small>
+              </span>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a
+              class="connect-row"
+              href="/connect-mailbox?provider=outlook"
+              data-provider="outlook"
+            >
+              <span
+                class="connect-avatar connect-avatar--outlook"
+                aria-hidden="true"
+                >O</span
+              >
+              <span class="connect-copy">
+                <strong>Outlook &amp; Hotmail</strong>
+                <small>Main Microsoft inbox</small>
+              </span>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a
+              class="connect-row"
+              href="/connect-mailbox?provider=imap"
+              data-provider="imap"
+            >
+              <span
+                class="connect-avatar connect-avatar--imap"
+                aria-hidden="true"
+                >E</span
+              >
+              <span class="connect-copy">
+                <strong>Other email</strong>
+                <small>iCloud, Yahoo, or IMAP</small>
+              </span>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+          <div class="connect-error" data-connect-error role="alert">
+            Could not start email connection. Please try again.
+          </div>
+
+          <div class="trust" aria-label="Mailbox access">
+            <div class="trust-item">
+              <div class="trust-key">Read-only</div>
+              <div class="trust-value">Scan only</div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-key">Revoke</div>
+              <div class="trust-value">Anytime</div>
+            </div>
+          </div>
+
+          <p class="bottom-note">
+            Already connected? <a href="/#get-started">Choose a membership</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      ;(function () {
+        var links = Array.prototype.slice.call(
+          document.querySelectorAll('[data-provider]')
+        )
+        var error = document.querySelector('[data-connect-error]')
+
+        function setLoading(activeLink) {
+          links.forEach(function (link) {
+            if (link === activeLink) {
+              link.classList.add('is-loading')
+              link.setAttribute('aria-busy', 'true')
+              var icon = link.querySelector('svg')
+              if (icon) {
+                icon.outerHTML =
+                  '<span class="connect-spinner" aria-hidden="true"></span>'
+              }
+              return
+            }
+
+            link.classList.add('is-disabled')
+            link.setAttribute('aria-disabled', 'true')
+          })
+        }
+
+        links.forEach(function (link) {
+          link.addEventListener('click', function () {
+            if (error) error.classList.remove('is-visible')
+            setLoading(link)
+          })
+        })
+      })()
+    </script>
+  </body>
+</html>

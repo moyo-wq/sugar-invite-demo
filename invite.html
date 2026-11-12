@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sugar — Invite only</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <script src="assets/nz-invite.js?v=6"></script>
+    <style>
+      :root {
+        --ink: #241a54;
+        --ink-soft: #4b4470;
+        --purple: #7a4bdb;
+        --purple-deep: #241a54;
+        --line: #e2ddf2;
+        --card: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        font-family: 'General Sans', system-ui, -apple-system, sans-serif;
+        color: var(--ink);
+        background: #ece9fb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        overflow: hidden;
+        position: relative;
+      }
+      /* gentle moving background */
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.55;
+        animation: drift 18s ease-in-out infinite;
+      }
+      .blob.b1 {
+        width: 460px;
+        height: 460px;
+        background: #c9b8ff;
+        top: -120px;
+        left: -80px;
+      }
+      .blob.b2 {
+        width: 520px;
+        height: 520px;
+        background: #b49cff;
+        bottom: -160px;
+        right: -120px;
+        animation-delay: -6s;
+      }
+      .blob.b3 {
+        width: 360px;
+        height: 360px;
+        background: #ded3ff;
+        top: 40%;
+        left: 55%;
+        animation-delay: -11s;
+      }
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(30px, -24px) scale(1.06);
+        }
+        66% {
+          transform: translate(-22px, 26px) scale(0.96);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 460px;
+      }
+      .brand {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--purple);
+        letter-spacing: -0.01em;
+        margin-bottom: 18px;
+        opacity: 0;
+        animation: fade-down 0.6s 0.05s ease forwards;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 34px 32px 30px;
+        box-shadow:
+          0 30px 70px rgba(26, 16, 70, 0.18),
+          0 2px 0 rgba(26, 16, 70, 0.04);
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+        animation: rise-in 0.6s 0.12s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+      }
+      @keyframes rise-in {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fade-down {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--purple);
+        margin: 0 0 8px;
+      }
+      h1 {
+        font-size: 25px;
+        line-height: 1.2;
+        margin: 0 0 8px;
+        font-weight: 800;
+      }
+      p.lead {
+        font-size: 15.5px;
+        line-height: 1.55;
+        color: var(--ink-soft);
+        margin: 0 0 22px;
+      }
+      p.lead strong {
+        color: var(--ink);
+      }
+
+      /* step transition */
+      .step {
+        transition:
+          opacity 0.26s ease,
+          transform 0.26s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .step.is-leaving {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      .step.is-entering {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      label.field-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        margin: 0 0 7px;
+      }
+      input.text {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1.5px solid var(--line);
+        border-radius: 13px;
+        font-size: 15.5px;
+        font-family: inherit;
+        color: var(--ink);
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+      }
+      input.text:focus {
+        border-color: var(--purple);
+        box-shadow: 0 0 0 4px rgba(122, 75, 219, 0.12);
+      }
+      .btn {
+        appearance: none;
+        border: 0;
+        width: 100%;
+        padding: 15px 18px;
+        border-radius: 13px;
+        font-size: 15.5px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        background: var(--purple-deep);
+        color: #fff;
+        transition:
+          transform 0.12s ease,
+          filter 0.18s ease,
+          background 0.18s;
+      }
+      .btn:hover {
+        filter: brightness(1.08);
+      }
+      .btn:active {
+        transform: translateY(1px) scale(0.995);
+      }
+      .btn[disabled] {
+        opacity: 0.65;
+        cursor: default;
+      }
+      .btn.ghost {
+        background: #f2eefc;
+        color: var(--ink);
+      }
+      .mt {
+        margin-top: 11px;
+      }
+      .row {
+        display: flex;
+        gap: 11px;
+      }
+      .row .btn {
+        margin: 0;
+      }
+      .error {
+        color: #c0392b;
+        font-size: 13.5px;
+        min-height: 18px;
+        margin: 10px 2px 0;
+      }
+      .back {
+        appearance: none;
+        background: none;
+        border: 0;
+        color: var(--purple);
+        font-weight: 600;
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        padding: 10px 2px 0;
+      }
+      .back:hover {
+        text-decoration: underline;
+      }
+
+      /* fast-track (connect email) block on the waitlist step */
+      .divider {
+        height: 1px;
+        background: var(--line);
+        margin: 22px 0 18px;
+      }
+      .ft {
+        text-align: left;
+        background: #f6f3fe;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        padding: 16px 16px 17px;
+      }
+      .ft .eyebrow {
+        margin-bottom: 6px;
+      }
+      .ft h3 {
+        margin: 0 0 6px;
+        font-size: 16.5px;
+        font-weight: 800;
+      }
+      .ft p {
+        font-size: 14px;
+        color: var(--ink-soft);
+        line-height: 1.5;
+        margin: 0 0 13px;
+      }
+      .providers {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .provider-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 14.5px;
+        text-decoration: none;
+        transition:
+          border-color 0.15s,
+          transform 0.1s;
+      }
+      .provider-btn:hover {
+        border-color: var(--purple);
+      }
+      .provider-btn:active {
+        transform: translateY(1px);
+      }
+      .provider-btn.is-primary {
+        background: var(--purple-deep);
+        color: #fff;
+        border-color: var(--purple-deep);
+      }
+      .provider-ic {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        flex: 0 0 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+        background: rgba(122, 75, 219, 0.12);
+        color: var(--purple);
+      }
+      .provider-btn.is-primary .provider-ic {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+      }
+      .center {
+        text-align: center;
+      }
+
+      /* success / waitlist flourish */
+      .flourish {
+        width: 64px;
+        height: 64px;
+        margin: 2px 0 16px;
+      }
+      .flourish circle {
+        fill: none;
+        stroke: var(--purple);
+        stroke-width: 4;
+        stroke-dasharray: 190;
+        stroke-dashoffset: 190;
+        animation: draw 0.6s 0.05s ease forwards;
+      }
+      .flourish path {
+        fill: none;
+        stroke: var(--purple);
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 48;
+        stroke-dashoffset: 48;
+        animation: draw 0.4s 0.5s ease forwards;
+      }
+      .flourish.wait circle {
+        stroke: #b49cff;
+      }
+      .flourish.wait path {
+        stroke: #b49cff;
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      .foot {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 12.5px;
+        color: #8a84a6;
+        opacity: 0;
+        animation: fade-down 0.6s 0.4s ease forwards;
+        position: relative;
+        z-index: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true">
+      <span class="blob b1"></span>
+      <span class="blob b2"></span>
+      <span class="blob b3"></span>
+    </div>
+
+    <div class="wrap">
+      <div class="brand">sugar</div>
+      <div class="card">
+        <div class="step" id="step"></div>
+      </div>
+    </div>
+
+    <script>
+      ;(function () {
+        var G = window.NZInviteGate
+        var stepEl = document.getElementById('step')
+        var params = new URLSearchParams(window.location.search)
+        var next = params.get('next') || 'index.html#get-started'
+        var codeParam = (params.get('invite') || '').trim()
+        var ctx = { email: '', inviter: '', code: null, codeInviter: null }
+
+        if (!G || typeof G.check !== 'function') {
+          window.location.assign('index.html')
+          return
+        }
+        // already admitted this session -> straight through
+        // demo: always start fresh
+        try { window.sessionStorage.removeItem('sugar.nzInvite.v1') } catch (e) {}
+
+        // ---- step rendering with a gentle cross-fade ----------------------
+        function paint(buildNode) {
+          stepEl.classList.add('is-leaving')
+          window.setTimeout(function () {
+            stepEl.innerHTML = ''
+            stepEl.appendChild(buildNode())
+            stepEl.classList.remove('is-leaving')
+            stepEl.classList.add('is-entering')
+            // next frame -> animate in
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                stepEl.classList.remove('is-entering')
+              })
+            })
+            var focusable = stepEl.querySelector('input')
+            if (focusable) focusable.focus()
+          }, 180)
+        }
+
+        function el(tag, attrs, html) {
+          var n = document.createElement(tag)
+          if (attrs) {
+            Object.keys(attrs).forEach(function (k) {
+              n.setAttribute(k, attrs[k])
+            })
+          }
+          if (html != null) n.innerHTML = html
+          return n
+        }
+        function esc(s) {
+          return String(s || '').replace(/[&<>"']/g, function (c) {
+            return {
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;'
+            }[c]
+          })
+        }
+        function setBusy(btn, busy, labelWhenIdle) {
+          if (!btn) return
+          btn.disabled = busy
+          btn.textContent = busy ? 'Please wait…' : labelWhenIdle
+        }
+
+        // ---- steps --------------------------------------------------------
+        function stepEmail(invited) {
+          return function () {
+            var frag = document.createDocumentFragment()
+            frag.appendChild(
+              el('p', { class: 'eyebrow' }, invited ? "You're invited" : 'Members only')
+            )
+            frag.appendChild(
+              el(
+                'h1',
+                null,
+                invited ? 'Welcome to Sugar' : 'Sugar is invite&#8209;only'
+              )
+            )
+            frag.appendChild(
+              el(
+                'p',
+                { class: 'lead' },
+                invited
+                  ? 'You were invited by <strong>' +
+                      esc(ctx.codeInviter) +
+                      '</strong>. Enter your email to continue.'
+                  : "Enter your email and we'll check if you're on the list."
+              )
+            )
+            var input = el('input', {
+              class: 'text',
+              type: 'email',
+              placeholder: 'you@email.com',
+              value: ctx.email
+            })
+            var btn = el('button', { class: 'btn mt' }, invited ? 'Continue to sign up' : 'Continue')
+            var err = el('p', { class: 'error' })
+            frag.appendChild(input)
+            frag.appendChild(btn)
+            frag.appendChild(err)
+
+            function submit() {
+              var email = input.value.trim()
+              if (!G.isEmail(email)) {
+                err.textContent = 'Please enter a valid email address.'
+                return
+              }
+              ctx.email = email
+              err.textContent = ''
+              var idle = btn.textContent
+              setBusy(btn, true)
+              if (invited) {
+                G.redeemCode(email, ctx.code)
+                  .then(function (r) {
+                    if (r === 'allowed') return admit(ctx.codeInviter, ctx.code)
+                    // code no longer valid -> fall back to the normal check
+                    paint(stepEmail(false))
+                  })
+                  .catch(function () {
+                    setBusy(btn, false, idle)
+                    err.textContent = 'Something went wrong. Please try again.'
+                  })
+                return
+              }
+              G.check(email)
+                .then(function (r) {
+                  // Real (current OR past) paying customer — they already have
+                  // an account, send them to log in, don't make them re-sign-up.
+                  if (r === 'paying') {
+                    paint(function () {
+                      var f = document.createDocumentFragment()
+                      f.appendChild(el('div',{class:'flourish'},'<svg viewBox="0 0 68 68" class="flourish"><circle cx="34" cy="34" r="30"/><path d="M22 35 l9 9 l16 -18"/></svg>'))
+                      f.appendChild(el('p',{class:'eyebrow'},'Welcome back'))
+                      f.appendChild(el('h1',null,"You're already a Sugar member"))
+                      f.appendChild(el('p',{class:'lead'},'On the live site you\u2019d go straight to <strong>log in</strong> / your dashboard.'))
+                      var again=el('button',{class:'btn ghost mt'},'Try another email')
+                      again.addEventListener('click',function(){window.location.reload()})
+                      f.appendChild(again); return f
+                    })
+                    return
+                  }
+                  // Already on the invite list (vouched/code/seed) but not a
+                  // payer — let them straight into sign-up (no login dead-end).
+                  if (r === 'invited') {
+                    admit(null, null)
+                    return
+                  }
+                  paint(stepKnowSomeone())
+                })
+                .catch(function () {
+                  setBusy(btn, false, idle)
+                  err.textContent = 'Something went wrong. Please try again.'
+                })
+            }
+            btn.addEventListener('click', submit)
+            input.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') submit()
+            })
+            return frag
+          }
+        }
+
+        function stepKnowSomeone() {
+          return function () {
+            var frag = document.createDocumentFragment()
+            frag.appendChild(el('p', { class: 'eyebrow' }, 'Members only'))
+            frag.appendChild(el('h1', null, "You're not on the list yet"))
+            frag.appendChild(
+              el(
+                'p',
+                { class: 'lead' },
+                '<strong>' +
+                  esc(ctx.email) +
+                  "</strong> isn't on the Sugar list. Do you know someone who's already a member? We'll email them for you."
+              )
+            )
+            var row = el('div', { class: 'row mt' })
+            var yes = el('button', { class: 'btn' }, 'Yes, I do')
+            var no = el('button', { class: 'btn ghost' }, 'No')
+            row.appendChild(yes)
+            row.appendChild(no)
+            var err = el('p', { class: 'error' })
+            frag.appendChild(row)
+            frag.appendChild(err)
+
+            yes.addEventListener('click', function () {
+              paint(stepInviter())
+            })
+            no.addEventListener('click', function () {
+              setBusy(no, true)
+              G.waitlist(ctx.email)
+                .then(function () {
+                  paint(stepWaitlisted(false))
+                })
+                .catch(function () {
+                  setBusy(no, false, 'No')
+                  err.textContent = 'Something went wrong. Please try again.'
+                })
+            })
+            return frag
+          }
+        }
+
+        function stepInviter() {
+          return function () {
+            var frag = document.createDocumentFragment()
+            frag.appendChild(el('p', { class: 'eyebrow' }, 'Members only'))
+            frag.appendChild(el('h1', null, 'Who invited you?'))
+            frag.appendChild(
+              el(
+                'p',
+                { class: 'lead' },
+                "Enter the email of the Sugar member you know. We'll check they're inside, then let you in."
+              )
+            )
+            var input = el('input', {
+              class: 'text',
+              type: 'email',
+              placeholder: "member's@email.com",
+              value: ctx.inviter
+            })
+            var btn = el('button', { class: 'btn mt' }, 'Continue')
+            var err = el('p', { class: 'error' })
+            var back = el('button', { class: 'back' }, '← Back')
+            frag.appendChild(input)
+            frag.appendChild(btn)
+            frag.appendChild(err)
+            frag.appendChild(back)
+
+            function submit() {
+              var inviter = input.value.trim()
+              if (!G.isEmail(inviter)) {
+                err.textContent = "Please enter the member's email address."
+                return
+              }
+              ctx.inviter = inviter
+              err.textContent = ''
+              setBusy(btn, true)
+              G.vouch(ctx.email, inviter)
+                .then(function (r) {
+                  if (r === 'allowed') return admit(inviter, null)
+                  paint(stepWaitlisted(true))
+                })
+                .catch(function () {
+                  setBusy(btn, false, 'Continue')
+                  err.textContent = 'Something went wrong. Please try again.'
+                })
+            }
+            btn.addEventListener('click', submit)
+            input.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') submit()
+            })
+            back.addEventListener('click', function () {
+              paint(stepKnowSomeone())
+            })
+            return frag
+          }
+        }
+
+        function stepWaitlisted(afterVouch) {
+          return function () {
+            var frag = document.createDocumentFragment()
+            frag.appendChild(
+              el(
+                'div',
+                { class: 'flourish wait' },
+                '<svg viewBox="0 0 68 68" class="flourish wait"><circle cx="34" cy="34" r="30"/><path d="M34 20 v16 l10 7"/></svg>'
+              )
+            )
+            frag.appendChild(el('p', { class: 'eyebrow' }, 'Thanks!'))
+            frag.appendChild(el('h1', null, "You're on the waitlist"))
+            frag.appendChild(
+              el(
+                'p',
+                { class: 'lead' },
+                afterVouch
+                  ? "We couldn't find <strong>" +
+                      esc(ctx.inviter) +
+                      "</strong> on the member list, so we've added you to the waitlist. We'll be in touch when a spot opens."
+                  : "We've added you to the waitlist. We'll email you the moment a spot opens up."
+              )
+            )
+
+            // Fast-track: connect your email for a quick scan to jump the queue.
+            frag.appendChild(el('div', { class: 'divider' }))
+            var ft = el('div', { class: 'ft' })
+            ft.appendChild(el('p', { class: 'eyebrow' }, 'Jump the queue'))
+            ft.appendChild(
+              el('h3', null, 'Connect your email for a quick debt &amp; bill scan')
+            )
+            ft.appendChild(
+              el(
+                'p',
+                null,
+                "We'll push you up the queue if we find significant savings from this scan."
+              )
+            )
+            // Real email connect: the built mailbox-connect flow
+            // (/connect-mailbox?provider=…) — same entry the Connect Email
+            // feature uses. Carries the waitlisted email + from=waitlist.
+            var providers = [
+              { key: 'gmail', label: 'Connect Gmail', icon: 'G', primary: true },
+              { key: 'outlook', label: 'Connect Outlook', icon: 'O' },
+              { key: 'imap', label: 'Other email', icon: '@' }
+            ]
+            var prow = el('div', { class: 'providers' })
+            providers.forEach(function (prov) {
+              var href =
+                '/connect-mailbox?provider=' +
+                prov.key +
+                '&from=waitlist&email=' +
+                encodeURIComponent(ctx.email)
+              var pb = el(
+                'a',
+                {
+                  class: 'provider-btn' + (prov.primary ? ' is-primary' : ''),
+                  href: href
+                },
+                '<span class="provider-ic">' + prov.icon + '</span>' + prov.label
+              )
+              pb.addEventListener('click', function (e) {
+                e.preventDefault()
+                var go = function () {
+                  prow.innerHTML = '<p class="lead" style="margin:0">\u2713 Starting the <strong>' + prov.label.replace('Connect ','') + '</strong> connect\u2026 on the live site this opens the real Gmail/Outlook OAuth and bumps you up the queue.</p>'
+                }
+                // notify moyo@ that they're connecting, then continue
+                if (typeof G.notifyConnect === 'function') {
+                  G.notifyConnect(ctx.email, prov.key).then(go, go)
+                } else {
+                  go()
+                }
+              })
+              prow.appendChild(pb)
+            })
+            ft.appendChild(prow)
+            frag.appendChild(ft)
+
+            var home = el(
+              'button',
+              { class: 'back center', style: 'display:block;width:100%;margin-top:14px' },
+              'Back to sugar'
+            )
+            home.addEventListener('click', function () {
+              window.location.assign('index.html')
+            })
+            frag.appendChild(home)
+            return frag
+          }
+        }
+
+        function stepAdmitted() {
+          return function () {
+            var frag = document.createDocumentFragment()
+            frag.appendChild(
+              el(
+                'div',
+                { class: 'flourish' },
+                '<svg viewBox="0 0 68 68" class="flourish"><circle cx="34" cy="34" r="30"/><path d="M22 35 l9 9 l16 -18"/></svg>'
+              )
+            )
+            frag.appendChild(el('p', { class: 'eyebrow' }, "You're in"))
+            frag.appendChild(el('h1', null, 'Welcome to Sugar'))
+            frag.appendChild(
+              el('p', { class: 'lead' }, 'On the live site you\u2019d continue to sign-up / checkout…')
+            )
+            return frag
+          }
+        }
+
+        // ---- admit + redirect ---------------------------------------------
+        function admit(inviter, code) {
+          G.setAdmitted({ email: ctx.email, inviterEmail: inviter, code: code })
+          paint(stepAdmitted())
+        }
+
+        // ---- boot ---------------------------------------------------------
+        function boot(invited) {
+          // first paint without the leave delay
+          stepEl.appendChild(stepEmail(invited)())
+          var input = stepEl.querySelector('input')
+          if (input) input.focus()
+        }
+
+        if (codeParam) {
+          G.resolveCode(codeParam)
+            .then(function (inviter) {
+              if (inviter) {
+                ctx.code = codeParam
+                ctx.codeInviter = inviter
+                boot(true)
+              } else {
+                boot(false)
+              }
+            })
+            .catch(function () {
+              boot(false)
+            })
+        } else {
+          boot(false)
+        }
+      })()
+    </script>
+  </body>
+</html>

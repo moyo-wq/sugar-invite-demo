@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Sugar Concierge Works | Safe, Legit & Built for NZ</title>
+  <meta name="description" content="Sugar Concierge scans your bills, finds where you're overpaying, and fixes it without you lifting a finger. Learn how it works and why it's safe for New Zealanders." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <!-- Marketing-site analytics (PostHog and Google Ads) -->
+  <script src="assets/analytics.js?v=20261102"></script>
+    <script src="assets/nz-invite.js?v=6"></script>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Bricolage Grotesque', Arial, Helvetica, sans-serif;
+      background: #ECEAF8;
+      color: #241A54;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 32px;
+      background: rgba(236, 234, 248, 0.85);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-logo { font-size: 26px; font-weight: 700; color: #9B86EA; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-link { font-size: 14px; font-weight: 600; color: #241A54; text-decoration: none; transition: color 0.15s; }
+    .nav-link:hover { color: #9B86EA; }
+    .nav-cta {
+      display: inline-flex; align-items: center; padding: 10px 24px;
+      border-radius: 50px; border: none; font-family: inherit; font-size: 14px;
+      font-weight: 600; color: #fff; background: #9B86EA; text-decoration: none;
+      cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 0 0 #221A51;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 #221A51; }
+    .nav-cta:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #221A51; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; z-index: 2; }
+
+    /* ── Layout ── */
+    section { width: 100%; max-width: 920px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow {
+      display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #9B86EA; margin-bottom: 16px;
+    }
+
+    /* ── Hero ── */
+    .hero { padding-top: 150px; padding-bottom: 60px; text-align: center; }
+    .hero-badge {
+      display: inline-block; background: #fff; color: #9B86EA; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 16px; border-radius: 50px; margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 54px); font-weight: 800; line-height: 1.08;
+      letter-spacing: -1.5px; max-width: 760px; margin: 0 auto 24px;
+    }
+    .hero h1 .highlight { color: #9B86EA; }
+    .hero-sub { font-size: clamp(16px, 2vw, 20px); color: #6E6883; line-height: 1.6; max-width: 600px; margin: 0 auto; }
+
+    /* ── Timeline (Section 1) ── */
+    .timeline-section { padding-top: 64px; padding-bottom: 64px; }
+    .section-heading {
+      font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.15;
+      letter-spacing: -1px; margin-bottom: 12px; max-width: 620px;
+    }
+    .section-lead { font-size: 16px; color: #6E6883; line-height: 1.6; max-width: 580px; margin-bottom: 48px; }
+    .timeline { position: relative; max-width: 720px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 23px; top: 8px; bottom: 8px;
+      width: 2px; background: linear-gradient(#9B86EA, #D6D3E8);
+    }
+    .tl-step { position: relative; padding-left: 76px; padding-bottom: 40px; }
+    .tl-step:last-child { padding-bottom: 0; }
+    .tl-num {
+      position: absolute; left: 0; top: 0; width: 48px; height: 48px; border-radius: 50%;
+      background: #fff; border: 2px solid #9B86EA; color: #9B86EA;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; z-index: 1;
+      box-shadow: 0 6px 20px rgba(155, 134, 234, 0.25);
+    }
+    .tl-step h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .tl-step p { font-size: 15px; color: #6E6883; line-height: 1.65; max-width: 540px; }
+
+    /* ── Answer blocks (Sections 2-4) ── */
+    .answer-section { padding-top: 24px; padding-bottom: 24px; }
+    .answer-card {
+      background: #fff; border-radius: 24px; padding: 44px 40px;
+      box-shadow: 0 8px 40px rgba(34, 26, 81, 0.06); margin-bottom: 24px;
+    }
+    .answer-card h2 {
+      font-size: clamp(23px, 3.4vw, 34px); font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.5px; margin-bottom: 18px;
+    }
+    .answer-card .lede { font-size: 17px; font-weight: 600; color: #241A54; line-height: 1.55; margin-bottom: 18px; }
+    .answer-card .body-text { font-size: 15px; color: #6E6883; line-height: 1.7; margin-bottom: 16px; }
+    .answer-card .body-text:last-child { margin-bottom: 0; }
+    .answer-card a.inline { color: #9B86EA; font-weight: 600; text-decoration: underline; }
+
+    .check-list { list-style: none; margin-top: 8px; }
+    .check-list li {
+      position: relative; padding-left: 36px; margin-bottom: 16px;
+      font-size: 15px; color: #4A4366; line-height: 1.6;
+    }
+    .check-list li:last-child { margin-bottom: 0; }
+    .check-list li::before {
+      content: '✓'; position: absolute; left: 0; top: -1px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #EAF7EF; color: #27ae60; font-size: 13px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-list li strong { color: #241A54; }
+
+    .answer-card.scam { border: 2px solid #EAF7EF; }
+    .scam-no {
+      display: inline-block; background: #EAF7EF; color: #1e8e4e;
+      font-weight: 800; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 50px; margin-bottom: 16px;
+    }
+
+    /* ── Final CTA ── */
+    .final-cta { padding-top: 72px; padding-bottom: 110px; text-align: center; }
+    .final-cta h2 {
+      font-size: clamp(28px, 4.5vw, 46px); font-weight: 800; line-height: 1.12;
+      letter-spacing: -1px; max-width: 600px; margin: 0 auto 18px;
+    }
+    .final-cta p { font-size: 16px; color: #6E6883; margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px; padding: 17px 34px;
+      border-radius: 50px; border: none; font-family: inherit; font-size: 16px; font-weight: 700;
+      color: #fff; background: #9B86EA; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 0 0 #221A51; text-decoration: none;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 0 0 #221A51; }
+    .hero-cta:active { transform: translateY(3px); box-shadow: 0 3px 0 0 #221A51; }
+    .hero-cta.secondary {
+      color: #241A54; background: #fff; box-shadow: 0 6px 0 0 #D6D3E8;
+    }
+    .hero-cta.secondary:hover { box-shadow: 0 8px 0 0 #D6D3E8; }
+    .hero-cta.secondary:active { box-shadow: 0 3px 0 0 #D6D3E8; }
+
+    /* ── Footer ── */
+    .site-footer { border-top: 1px solid #D6D3E8; padding: 48px 24px 40px; text-align: center; }
+    .footer-inner { max-width: 960px; margin: 0 auto; }
+    .footer-logo { font-size: 28px; font-weight: 700; color: #9B86EA; letter-spacing: -0.5px; text-decoration: none; display: inline-block; margin-bottom: 24px; }
+    .footer-nav { display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-nav a { font-size: 14px; font-weight: 600; color: #241A54; text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: #9B86EA; }
+    .footer-email { margin-bottom: 20px; }
+    .footer-email a { font-size: 14px; color: #9B86EA; text-decoration: none; font-weight: 500; }
+    .footer-email a:hover { text-decoration: underline; }
+    .footer-copy { font-size: 13px; color: #B8B2D0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .site-nav { padding: 14px 20px; }
+      .nav-logo { font-size: 22px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .nav-links.is-open {
+        display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+        z-index: 1; background: #ECEAF8; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        padding: 16px 24px 28px; gap: 0; align-items: stretch;
+        border-bottom: 1px solid rgba(36, 26, 84, 0.1); box-shadow: 0 18px 36px rgba(36, 26, 84, 0.12);
+      }
+      .nav-links.is-open .nav-link { display: block; padding: 12px 0; font-size: 16px; text-align: center; border-bottom: 1px solid #D6D3E8; }
+      .nav-links.is-open .nav-cta {
+        display: flex; width: 100%; max-width: 340px; min-height: 44px; margin: 12px auto 6px;
+        text-align: center; justify-content: center;
+      }
+      .answer-card { padding: 28px 22px; }
+      .tl-step { padding-left: 64px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">sugar</a>
+    <div class="nav-links" id="nav-links">
+      <a href="about.html" class="nav-link">About</a>
+      <a href="how-it-works.html" class="nav-link">How it works</a>
+      <a href="faq.html" class="nav-link">FAQ</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="customer-love.html" class="nav-link">Customer Love</a>
+      <a href="connect-email.html" class="nav-link">Connect Email</a>
+      <a href="index.html#get-started" class="nav-cta">Get started</a>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('nav-links').classList.toggle('is-open')" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#241A54" stroke-width="2" stroke-linecap="round" width="28" height="28">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">How it works</div>
+    <h1>How Sugar Concierge <span class="highlight">Works</span></h1>
+    <p class="hero-sub">Sugar Concierge is a New Zealand financial concierge service. We scan your bills, find where you're overpaying, and fix it for you, without you lifting a finger.</p>
+  </section>
+
+  <!-- ── Section 1: Step-by-step ── -->
+  <section class="timeline-section">
+    <div class="eyebrow">The process</div>
+    <h2 class="section-heading">From inbox to savings in four steps</h2>
+    <p class="section-lead">No spreadsheets, no phone calls, no switching providers yourself. You connect once, and Sugar Concierge handles the rest.</p>
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-num">1</div>
+        <h3>You connect your email</h3>
+        <p>It takes about a minute. You grant Sugar secure, read-only access to your inbox so we can find your financial documents like bills, statements, renewals, and receipts. We can never send, delete, or change anything.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">2</div>
+        <h3>We scan your finances</h3>
+        <p>Our systems automatically pick out what you're paying and to whom (power, broadband, insurance, loans, subscriptions) and build a complete picture of where your money is going each month.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">3</div>
+        <h3>We find where you're overpaying</h3>
+        <p>Every rate, plan, and provider is compared against the New Zealand market. We show you exactly where you're losing money and how much you could save, so you can start acting on the biggest opportunities quickly after joining.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-num">4</div>
+        <h3>We make the switch</h3>
+        <p>With your approval, our concierge team handles the switching, renegotiating, and consolidating. You get better deals across the board and keep the savings. You stay in control and sign off on every change.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 2: Is it safe & legit? ── -->
+  <section class="answer-section">
+    <div class="answer-card">
+      <div class="eyebrow">Safe, secure &amp; legitimate</div>
+      <h2>Is Sugar Concierge safe and legit?</h2>
+      <p class="body-text">Sugar Concierge is a safe, secure, and legitimate New Zealand financial service and you stay in control at every step. We use read-only email access, meaning we can only look for financial documents like bills, statements, and insurance renewals. We never send, delete, or modify anything in your inbox. Your data is kept private and encrypted, and we comply with New Zealand's Privacy Act 2020 and Google's Limited Use requirements. We never sell your data or use it for advertising, we make money by helping you save money, that's it. And if we don't deliver? We refund the difference. If Sugar Concierge doesn't save you enough to cover your membership, you get your money back, no questions asked. If you ever want to leave, you can unlink your email in one click or revoke access directly from your Google Account at myaccount.google.com/permissions.</p>
+    </div>
+  </section>
+
+  <!-- ── Final CTA ── -->
+  <section class="final-cta">
+    <h2>Ready to stop overpaying?</h2>
+    <p>Connect once. Sugar Concierge finds the savings. You keep the money. See what real New Zealanders say, or get started in a minute.</p>
+    <div class="cta-row">
+      <a href="index.html#get-started" class="hero-cta">Get started</a>
+      <a href="customer-love.html" class="hero-cta secondary">Read customer reviews</a>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">sugar</a>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="customer-love.html">Customer Love</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <div class="footer-email">
+        <a href="mailto:concierge@sugarwallet.com">concierge@sugarwallet.com</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Sugar Concierge. Based in New Zealand. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
