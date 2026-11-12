@@ -483,7 +483,7 @@
                   ? 'You were invited by <strong>' +
                       esc(ctx.codeInviter) +
                       '</strong>. Enter your email to continue.'
-                  : "Enter your email and we'll check if you're on the list."
+                  : "Enter your email to get started."
               )
             )
             var input = el('input', {
@@ -570,7 +570,7 @@
                 { class: 'lead' },
                 '<strong>' +
                   esc(ctx.email) +
-                  "</strong> isn't on the Sugar list. Do you know someone who's already a member? We'll email them for you."
+                  "</strong> isn't on the Sugar list. Did someone recommend you?"
               )
             )
             var row = el('div', { class: 'row mt' })
@@ -604,12 +604,12 @@
           return function () {
             var frag = document.createDocumentFragment()
             frag.appendChild(el('p', { class: 'eyebrow' }, 'Members only'))
-            frag.appendChild(el('h1', null, 'Who invited you?'))
+            frag.appendChild(el('h1', null, 'Did someone recommend you?'))
             frag.appendChild(
               el(
                 'p',
                 { class: 'lead' },
-                "Enter the email of the Sugar member you know. We'll check they're inside, then let you in."
+                "Enter their email."
               )
             )
             var input = el('input', {
