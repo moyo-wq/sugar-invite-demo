@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sugar — Invite tracker</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <style>
+      :root {
+        --ink: #241a54;
+        --ink-soft: #4b4470;
+        --purple: #7a4bdb;
+        --purple-deep: #241a54;
+        --line: #e6e1f5;
+        --bg: #f4f1fc;
+        --card: #fff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; background: var(--bg); color: var(--ink);
+        font-family: 'General Sans', system-ui, -apple-system, sans-serif;
+        line-height: 1.45;
+      }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 80px; }
+      header.top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; }
+      .logo { font-size: 24px; font-weight: 800; color: var(--purple); }
+      header.top h1 { font-size: 19px; margin: 0; font-weight: 700; }
+      .muted { color: var(--ink-soft); }
+      /* gate */
+      .gate { max-width: 400px; margin: 10vh auto; background: var(--card);
+        border-radius: 18px; padding: 30px 28px; box-shadow: 0 20px 50px rgba(26,16,70,.12); }
+      .gate h2 { margin: 0 0 6px; }
+      .gate p { margin: 0 0 18px; color: var(--ink-soft); font-size: 14.5px; }
+      input {
+        width: 100%; padding: 13px 14px; border: 1.5px solid var(--line);
+        border-radius: 12px; font-size: 15px; font-family: inherit; outline: none;
+      }
+      input:focus { border-color: var(--purple); }
+      button {
+        width: 100%; margin-top: 11px; padding: 13px; border: 0; border-radius: 12px;
+        background: var(--purple-deep); color: #fff; font-weight: 700; font-size: 15px;
+        font-family: inherit; cursor: pointer;
+      }
+      .err { color: #c0392b; font-size: 13.5px; min-height: 16px; margin-top: 8px; }
+      /* stats */
+      .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 26px; }
+      .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+      .stat .n { font-size: 28px; font-weight: 800; }
+      .stat .l { font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 600; }
+      /* sections */
+      section { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; margin-bottom: 20px; }
+      section h3 { margin: 0 0 14px; font-size: 16px; }
+      /* tree */
+      .vip { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+      .vip-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      .vip-email { font-weight: 800; }
+      .chip { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #efeafc; color: var(--purple); }
+      .chip.code { background: #241a54; color: #fff; font-family: ui-monospace, monospace; letter-spacing: .03em; }
+      .count { font-size: 12.5px; color: var(--ink-soft); }
+      ul.tree { list-style: none; margin: 10px 0 0; padding-left: 6px; }
+      ul.tree ul { list-style: none; margin: 4px 0 4px 0; padding-left: 18px; border-left: 2px solid var(--line); }
+      ul.tree li { padding: 4px 0; }
+      .node { display: inline-flex; align-items: center; gap: 8px; }
+      .node .em { font-weight: 600; }
+      .src { font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #f1eefb; color: var(--purple); font-weight: 700; }
+      .src.seed { background: #e9f7ef; color: #1f8a4c; }
+      .leaf-empty { color: var(--ink-soft); font-size: 13.5px; font-style: italic; }
+      /* tables */
+      table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+      th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+      td.date, td.prov { color: var(--ink-soft); white-space: nowrap; }
+      .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #e9f7ef; color: #1f8a4c; font-weight: 700; }
+      .empty { color: var(--ink-soft); font-size: 14px; padding: 8px 0; }
+      .refresh { background: #efeafc; color: var(--purple-deep); width: auto; padding: 8px 14px; font-size: 13px; margin: 0; }
+      .right { margin-left: auto; }
+    </style>
+  </head>
+  <body>
+    <!-- passcode gate -->
+    <div class="gate" id="gate">
+      <h2>Invite tracker</h2>
+      <p>Enter the team passcode to view invite connections.</p>
+      <input id="pass" type="password" placeholder="Passcode" autofocus />
+      <button id="go">View dashboard</button>
+      <div class="err" id="err"></div>
+    </div>
+
+    <!-- dashboard -->
+    <div class="wrap" id="dash" style="display:none">
+      <header class="top">
+        <span class="logo">sugar</span>
+        <h1>Invite tracker</h1>
+        <button class="refresh right" id="refresh">↻ Refresh</button>
+      </header>
+      <div class="stats" id="stats"></div>
+      <section>
+        <h3>VIP links &amp; their branches <span class="muted" style="font-weight:400;font-size:13px">— who each Sugar invite pulled in</span></h3>
+        <div id="vips"></div>
+      </section>
+      <section>
+        <h3>Waitlist <span class="muted" id="wl-count" style="font-weight:400;font-size:13px"></span></h3>
+        <div id="waitlist"></div>
+      </section>
+      <section>
+        <h3>Email connections <span class="muted" style="font-weight:400;font-size:13px">— fast-track, pending manual review</span></h3>
+        <div id="connections"></div>
+      </section>
+    </div>
+
+    <script>
+      ;(function () {
+        var CFG = {
+          url: 'https://vjfyuqdypacsffuulbdv.supabase.co',
+          anonKey:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqZnl1cWR5cGFjc2ZmdXVsYmR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkwNDg5NDcsImV4cCI6MjA2NDYyNDk0N30.25H6QRkdmLzuYYt2F0NaLznKfzt2vcDjZ2LXFtINfR8'
+        }
+        var gate = document.getElementById('gate')
+        var dash = document.getElementById('dash')
+        var passInput = document.getElementById('pass')
+        var err = document.getElementById('err')
+        var token = ''
+
+        function esc(s) {
+          return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+          })
+        }
+        function fmtDate(s) {
+          if (!s) return ''
+          var d = new Date(s)
+          if (isNaN(d)) return ''
+          return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) +
+            ' ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+        }
+        function rpc(fn, args) {
+          return fetch(CFG.url + '/rest/v1/rpc/' + fn, {
+            method: 'POST',
+            headers: {
+              apikey: CFG.anonKey, Authorization: 'Bearer ' + CFG.anonKey,
+              'Content-Type': 'application/json', Accept: 'application/json'
+            },
+            body: JSON.stringify(args || {})
+          }).then(function (r) { return r.json() })
+        }
+
+        function load() {
+          return rpc('nz_invite_dashboard', { p_token: token }).then(function (d) {
+            if (!d) return false
+            render(d)
+            return true
+          })
+        }
+
+        function render(d) {
+          // stats
+          var s = d.stats || {}
+          var cards = [
+            ['Members in', s.members], ['Waitlist', s.waitlist],
+            ['Email connections', s.connections], ['VIP links', s.codes],
+            ['Vouches', s.vouches]
+          ]
+          document.getElementById('stats').innerHTML = cards.map(function (c) {
+            return '<div class="stat"><div class="n">' + (c[1] == null ? 0 : c[1]) +
+              '</div><div class="l">' + c[0] + '</div></div>'
+          }).join('')
+
+          // connections lookup (who connected their email)
+          var connected = {}
+          ;(d.connections || []).forEach(function (c) {
+            if (c.email) connected[c.email.toLowerCase()] = c.provider || true
+          })
+
+          // ----- VIP tree -----
+          var members = d.members || []
+          var childrenMap = {} // lower(inviter) -> [member]
+          members.forEach(function (m) {
+            var key = (m.invited_by_email || '').toLowerCase()
+            if (!key) return
+            ;(childrenMap[key] = childrenMap[key] || []).push(m)
+          })
+          // codes grouped by inviter
+          var codesByInviter = {}
+          ;(d.codes || []).forEach(function (c) {
+            var k = (c.inviter_email || '').toLowerCase()
+            ;(codesByInviter[k] = codesByInviter[k] || []).push(c)
+          })
+          // VIP roots = every distinct code inviter
+          var roots = Object.keys(codesByInviter)
+
+          function countDesc(email) {
+            var kids = childrenMap[email.toLowerCase()] || []
+            var n = kids.length
+            kids.forEach(function (k) { n += countDesc(k.email) })
+            return n
+          }
+          function renderBranch(email) {
+            var kids = childrenMap[email.toLowerCase()] || []
+            if (!kids.length) return ''
+            return '<ul class="tree">' + kids.map(function (k) {
+              var conn = connected[(k.email || '').toLowerCase()]
+                ? ' <span class="pill">email connected</span>' : ''
+              return '<li><span class="node"><span class="em">' + esc(k.email) + '</span>' +
+                '<span class="src ' + esc(k.source) + '">' + esc(k.source) + '</span>' + conn +
+                '</span>' + renderBranch(k.email) + '</li>'
+            }).join('') + '</ul>'
+          }
+
+          var vipHtml = roots.map(function (r) {
+            var codes = (codesByInviter[r] || []).map(function (c) {
+              return '<span class="chip code">' + esc(c.code) + '</span>'
+            }).join(' ')
+            var n = countDesc(r)
+            var branches = renderBranch(r) ||
+              '<p class="leaf-empty">No one in this branch yet.</p>'
+            return '<div class="vip"><div class="vip-head">' +
+              '<span class="vip-email">' + esc(r) + '</span>' + codes +
+              '<span class="count right">' + n + ' in branch</span></div>' +
+              branches + '</div>'
+          }).join('')
+          document.getElementById('vips').innerHTML = vipHtml ||
+            '<p class="empty">No VIP links yet.</p>'
+
+          // ----- waitlist -----
+          var wl = d.waitlist || []
+          document.getElementById('wl-count').textContent = '— ' + wl.length
+          document.getElementById('waitlist').innerHTML = wl.length ?
+            '<table><thead><tr><th>Email</th><th>Named recommender</th><th>Email connected?</th><th>Joined</th></tr></thead><tbody>' +
+            wl.map(function (w) {
+              var conn = connected[(w.email || '').toLowerCase()]
+              return '<tr><td>' + esc(w.email) + '</td><td class="muted">' +
+                (w.attempted_inviter_email ? esc(w.attempted_inviter_email) : '—') +
+                '</td><td>' + (conn ? '<span class="pill">yes · ' + esc(conn === true ? '' : conn) + '</span>' : '<span class="muted">no</span>') +
+                '</td><td class="date">' + fmtDate(w.created_at) + '</td></tr>'
+            }).join('') + '</tbody></table>'
+            : '<p class="empty">No waitlist signups yet.</p>'
+
+          // ----- connections -----
+          var cs = d.connections || []
+          document.getElementById('connections').innerHTML = cs.length ?
+            '<table><thead><tr><th>Email</th><th>Provider</th><th>Connected</th></tr></thead><tbody>' +
+            cs.map(function (c) {
+              return '<tr><td>' + esc(c.email || '(unknown)') + '</td><td class="prov">' +
+                esc(c.provider || '—') + '</td><td class="date">' + fmtDate(c.created_at) + '</td></tr>'
+            }).join('') + '</tbody></table>'
+            : '<p class="empty">No email connections yet.</p>'
+        }
+
+        function submit() {
+          var v = passInput.value.trim()
+          if (!v) return
+          err.textContent = ''
+          document.getElementById('go').textContent = 'Checking…'
+          token = v
+          load().then(function (ok) {
+            document.getElementById('go').textContent = 'View dashboard'
+            if (ok) {
+              try { sessionStorage.setItem('sugar.inviteDash', v) } catch (e) {}
+              gate.style.display = 'none'
+              dash.style.display = ''
+            } else {
+              err.textContent = 'Wrong passcode.'
+            }
+          }).catch(function () {
+            document.getElementById('go').textContent = 'View dashboard'
+            err.textContent = 'Something went wrong. Try again.'
+          })
+        }
+
+        document.getElementById('go').addEventListener('click', submit)
+        passInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit() })
+        document.getElementById('refresh').addEventListener('click', function () { load() })
+
+        // remember passcode for the session
+        try {
+          var saved = sessionStorage.getItem('sugar.inviteDash')
+          if (saved) { passInput.value = saved; submit() }
+        } catch (e) {}
+      })()
+    </script>
+  </body>
+</html>
