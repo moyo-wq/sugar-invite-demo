@@ -609,13 +609,13 @@
               el(
                 'p',
                 { class: 'lead' },
-                "Enter their email."
+                "Enter their email or phone number."
               )
             )
             var input = el('input', {
               class: 'text',
-              type: 'email',
-              placeholder: "member's@email.com",
+              type: 'text',
+              placeholder: "their email or phone",
               value: ctx.inviter
             })
             var btn = el('button', { class: 'btn mt' }, 'Continue')
@@ -628,8 +628,8 @@
 
             function submit() {
               var inviter = input.value.trim()
-              if (!G.isEmail(inviter)) {
-                err.textContent = "Please enter the member's email address."
+              if (!G.isEmail(inviter) && inviter.replace(/\D/g, '').length < 7) {
+                err.textContent = "Please enter their email or phone number."
                 return
               }
               ctx.inviter = inviter
