@@ -74,6 +74,10 @@
       .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #e9f7ef; color: #1f8a4c; font-weight: 700; }
       .empty { color: var(--ink-soft); font-size: 14px; padding: 8px 0; }
       .refresh { background: #efeafc; color: var(--purple-deep); width: auto; padding: 8px 14px; font-size: 13px; margin: 0; }
+      .accept-btn { width: auto; margin: 0; padding: 6px 14px; font-size: 13px; border-radius: 9px; background: var(--purple); }
+      .accept-btn:disabled { opacity: .6; cursor: default; }
+      .accepted { color: #1f8a4c; font-weight: 700; font-size: 13px; white-space: nowrap; }
+      td.actcell { white-space: nowrap; text-align: right; }
       .right { margin-left: auto; }
     </style>
   </head>
@@ -226,13 +230,16 @@
           var wl = d.waitlist || []
           document.getElementById('wl-count').textContent = '— ' + wl.length
           document.getElementById('waitlist').innerHTML = wl.length ?
-            '<table><thead><tr><th>Email</th><th>Named recommender</th><th>Email connected?</th><th>Joined</th></tr></thead><tbody>' +
+            '<table><thead><tr><th>Email</th><th>Named recommender</th><th>Email connected?</th><th>Joined</th><th></th></tr></thead><tbody>' +
             wl.map(function (w) {
               var conn = connected[(w.email || '').toLowerCase()]
+              var action = w.accepted_at
+                ? '<span class="accepted">✓ Accepted</span>'
+                : '<button class="accept-btn" data-accept="' + esc(w.email) + '">Accept</button>'
               return '<tr><td>' + esc(w.email) + '</td><td class="muted">' +
                 (w.attempted_inviter_email ? esc(w.attempted_inviter_email) : '—') +
                 '</td><td>' + (conn ? '<span class="pill">yes · ' + esc(conn === true ? '' : conn) + '</span>' : '<span class="muted">no</span>') +
-                '</td><td class="date">' + fmtDate(w.created_at) + '</td></tr>'
+                '</td><td class="date">' + fmtDate(w.created_at) + '</td><td class="actcell">' + action + '</td></tr>'
             }).join('') + '</tbody></table>'
             : '<p class="empty">No waitlist signups yet.</p>'
 
@@ -271,6 +278,27 @@
         document.getElementById('go').addEventListener('click', submit)
         passInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit() })
         document.getElementById('refresh').addEventListener('click', function () { load() })
+
+        // Accept a waitlisted person -> admits them + sends a welcome email.
+        document.getElementById('waitlist').addEventListener('click', function (e) {
+          var btn = e.target.closest ? e.target.closest('.accept-btn') : null
+          if (!btn) return
+          var email = btn.getAttribute('data-accept')
+          btn.disabled = true
+          btn.textContent = 'Accepting…'
+          rpc('nz_invite_accept', { p_token: token, p_email: email }).then(function (r) {
+            if (r === 'accepted') {
+              btn.parentNode.innerHTML = '<span class="accepted">✓ Accepted</span>'
+            } else {
+              btn.disabled = false
+              btn.textContent = 'Accept'
+              alert('Could not accept (' + r + ')')
+            }
+          }).catch(function () {
+            btn.disabled = false
+            btn.textContent = 'Accept'
+          })
+        })
 
         // remember passcode for the session
         try {
